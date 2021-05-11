@@ -8,12 +8,6 @@ $('.page-scroll').on('click', function(e){
 
 	var elementTujuan = $(tujuan);
 
-	// console.log(elementTujuan);	
-
-	// $('body').animate({
-	// 	scrollTop: elementTujuan.offset().top - 50
-	// }, 1000);
-
 	$('html , body').animate({
 	  scrollTop: elementTujuan.offset().top - 60
 	}, 1000);

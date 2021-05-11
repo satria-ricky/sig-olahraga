@@ -62,8 +62,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ml-auto" >
-            <a class="nav-link page-scroll" href="#data_tempat_ibadah" >Data</a>
-            <a class="nav-link page-scroll" href="#peta_tempat_ibadah" >Map</a>
+            <a class="nav-link page-scroll" href="#data_lapangan" >Data</a>
+            <a class="nav-link page-scroll" href="#peta_lapangan" >Map</a>
             <a class="nav-link page-scroll" href="<?= base_url(); ?>c_login">Log in</a>
           </div>
         </div>
@@ -91,7 +91,7 @@
 <!-- body -->
 
 
-	<div class="container-fluid" id="data_tempat_ibadah">
+	<div class="container-fluid" id="data_lapangan">
 
        
           
@@ -125,7 +125,7 @@
 	
 	<div  style="margin-top: 100px;"></div>
 
-      <div class="container-fluid" id="peta_tempat_ibadah">
+      <div class="container-fluid" id="peta_lapangan">
 
           
           <div class="card shadow mb-4">
@@ -177,41 +177,6 @@
 <script src="<?= base_url('assets/dashboard/'); ?>script.js"></script>
   
 <script> 
-
-  function jenis_ibadah() {
-        $.ajax({
-            url: "<?php echo base_url(); ?>c_dashboard/load_jenis",
-            type: "post",
-            dataType: "json",
-            success: function(data) {
-                // console.log(data)
-                var jenisBody = "";
-                for(var key in data){
-                  jenisBody +=`<option value="${data[key]['jenis_id']}">${data[key]['jenis_nama']}</option>`;
-                }
-                $("#jenis_ibadah").append(jenisBody);
-            }
-        });
-    }
-    jenis_ibadah();
-
-    function kabupaten() {
-        $.ajax({
-            url: "<?php echo base_url(); ?>c_dashboard/load_kabupaten",
-            type: "post",
-            dataType: "json",
-            success: function(data) {
-                // console.log(data)
-                var kabupatenBody = "";
-                for(var key in data){
-                  kabupatenBody +=`<option value="${data[key]['kab_id']}">${data[key]['kab_nama']}</option>`;
-                }
-                $("#kabupaten").append(kabupatenBody);
-            }
-        });
-    }
-    kabupaten();
-
 
     function getData(jenis, kab){
       $.ajax({
@@ -288,145 +253,7 @@
 <!-- PETA -->
 
 <script> 
-
-  function jenis_ibadah_peta() {
-        $.ajax({
-            url: "<?php echo base_url(); ?>c_dashboard/load_jenis",
-            type: "post",
-            dataType: "json",
-            success: function(data) {
-                // console.log(data)
-                var jenisBody = "";
-                for(var key in data){
-                  jenisBody +=`<option value="${data[key]['jenis_id']}">${data[key]['jenis_nama']}</option>`;
-                }
-                $("#jenis_ibadah_peta").append(jenisBody);
-            }
-        });
-    }
-    jenis_ibadah_peta();
-
-    function kabupaten_peta() {
-        $.ajax({
-            url: "<?php echo base_url(); ?>c_dashboard/load_kabupaten",
-            type: "post",
-            dataType: "json",
-            success: function(data) {
-                // console.log(data)
-                var kabupatenBody = "";
-                for(var key in data){
-                  kabupatenBody +=`<option value="${data[key]['kab_id']}">${data[key]['kab_nama']}</option>`;
-                }
-                $("#kabupaten_peta").append(kabupatenBody);
-            }
-        });
-    }
-    kabupaten_peta();
-
-
-    getData_peta();
-
-  $(document).on("click", "#filter_peta", function(e) {
-        e.preventDefault();
-
-        
-    var id_kab = $("#kabupaten_peta").val();
-        var id_jenis = $("#jenis_ibadah_peta").val();
-        
-
-        if ((id_kab.length != 0 ) && (id_jenis.length != 0)) {
-      // console.log("ini jenis="+id_jenis+" dan ini kabupaten="+id_kab);
-      get_kab_by_id(id_kab, id_jenis);
-    }
-    else if((id_kab.length != 0) && (id_jenis.length == 0)){
-      // console.log("ini kab ="+id_kab);
-      get_kab_by_id(id_kab, '');
-    }
-    else if((id_kab.length == 0) && (id_jenis.length != 0)){
-      // console.log("ini jenis ="+id_jenis); 
-      getData_peta('', id_jenis);
-    }
-    else{
-      getData_peta();
-    }
-
-    });
-
-
-  function get_kab_by_id(kab, jenis){
-    
-    $.ajax({
-          url: "<?php echo base_url(); ?>c_dashboard/load_kab_by",
-          type: "post",
-          data: {id_kab: kab},
-          dataType: "json",
-          success: function(data) {
-              // console.log(data.kab_latitude);
-              getData_peta_kab(data.kab_latitude, data.kab_longitude, kab, jenis);
-          }
-    });
-
-  }
-
-  
-  function getData_peta_kab(lat, long, kab, jenis){
-
-  // console.log("latitude="+lat, " & longitude="+long, " & kabupaten="+kab, " & jenis="+jenis);
-
-            $.ajax({
-            url: "<?php echo base_url(); ?>c_dashboard/load_data_to_tabel",
-            type: "post",
-            data: {
-                    id_jenis: jenis,
-                    id_kab: kab
-                },
-            dataType: "json",
-            success: function(data) {
-                // console.log("latitude="+lat, " & longitude="+long, data);
-                
-      navigator.geolocation.getCurrentPosition(function(location) {
-          var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
-
-          //map view 
-          console.log(location.coords.latitude, location.coords.longitude);
-
-          document.getElementById('mapid').innerHTML = "<div id='data_peta' style='height: 450px;'></div>";
-
-          var mymap = L.map('data_peta').setView([lat, long], 14);
-
-        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-        maxZoom: 18,
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-          '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-          'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        id: 'mapbox/streets-v11',
-        }).addTo(mymap);
-                             
-        for(var i =0;i < data.length; i++){
-          if (data[i].latitude != null || data[i].longitude != null) {
-            // console.log(no = no +1);
-            
-            var icon_map = L.icon({
-                    iconUrl: '<?= base_url('assets/foto/tempat_ibadah/mapicon/')?>'+data[i].mapicon,
-                    iconSize:     [30, 30], // size of the icon
-                });
-                L.marker([data[i].latitude, data[i].longitude],{icon:icon_map}).addTo(mymap).bindPopup("<b>"+data[i].ti_nama+"</b><br>"+data[i].ti_alamat+"<br> <div class='row ml-1'><h6><a href='"+data[i].ti_id+"' class='btn btn-sm btn-outline-info' data-toggle='modal' data-target='#modal_detail"+data[i].ti_id+"'>Detail</a></h6><h6><a href='https://www.google.com/maps/dir/?api=1&origin="+location.coords.latitude+","+location.coords.longitude+"&destination="+data[i].latitude+","+data[i].longitude+"' class='btn btn-sm btn-outline-success' target='_blank'>Rute</a></h6></div>");
-          }
-        }
-
-
-      });
-
-        }
-    });
-
-    
-
-
-}
-
-
-
+getData_peta();
 function getData_peta(kab, jenis){
   $.ajax({
         url: "<?php echo base_url(); ?>c_dashboard/load_data_to_tabel",
@@ -441,30 +268,24 @@ function getData_peta(kab, jenis){
 
 //load data
 
-var datasearch = [] ;
-for(var i =0;i < data.length; i++){
-  if (data[i].latitude != null || data[i].longitude != null) {
-    datasearch.push({"titik_koordinat":[data[i].latitude,data[i].longitude], "jenis":data[i].jenis_nama});
-  }
-}
+      var datasearch = [];
+      for(var i =0;i < data.length; i++){
+        if (data[i].latitude != null || data[i].longitude != null) {
+          datasearch.push({"titik_koordinat":[data[i].latitude,data[i].longitude], "jenis":data[i].jenis_nama});
+        }
+      }
 
 // console.log(datasearch);
 
-		
-		
-  
-  
-
-
+	
   navigator.geolocation.getCurrentPosition(function(location) {
       var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
 
-      //map view 
+    
       console.log(location.coords.latitude, location.coords.longitude);
 
       document.getElementById('mapid').innerHTML = "<div id='data_peta' style='height: 450px;'></div>";
       
-      // var mymap = new L.map('data_peta').setView([-8.58280355011038, 116.13464826731037], 14);
 
       var mymap = new L.Map('data_peta', {zoom: 14, center: new L.latLng([-8.58280355011038, 116.13464826731037]) });
 
@@ -519,9 +340,6 @@ mymap.addLayer (new L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}
   });
 
 
-
-
-
         }
 
     });
@@ -534,8 +352,7 @@ mymap.addLayer (new L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}
 
 
 
-  
-  
+
 
 <?php foreach($list as $ti ) : ?>
 
