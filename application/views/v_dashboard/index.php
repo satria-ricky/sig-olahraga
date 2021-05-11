@@ -177,33 +177,27 @@
 <script src="<?= base_url('assets/dashboard/'); ?>script.js"></script>
   
 <script> 
-
-    function getData(jenis, kab){
+  getData();
+    function getData(){
       $.ajax({
             url: "<?php echo base_url(); ?>c_dashboard/load_data_to_tabel",
-            type: "post",
-            data: {
-                id_jenis: jenis,
-                id_kab: kab
-            },
             dataType: "json",
             success: function(data) {
                 // console.log(data);
                 var i = 1;
                  $('#data_tabel').DataTable( {
                   "data": data,
-              "columns": [
-              
+                  "columns": [
                         {
-                            "data": "ti_nama"
+                            "data": "bt_nama"
                         },
                         {
-                            "data": "ti_alamat"
+                            "data": "bt_alamat"
                         },
                         {
-                            "data": "ti_id",
+                            "data": "bt_id",
                             "render": function(data, type, row, meta) {
-                            return `<a href="${row.ti_id}" class="badge badge-primary" data-toggle="modal" data-target="#modal_detail${row.ti_id}" >Detail</a>`;
+                            return `<a href="${row.bt_id}" class="badge badge-primary" data-toggle="modal" data-target="#modal_detail${row.bt_id}" >Detail</a>`;
                             }
                         }
               ]
@@ -211,41 +205,6 @@
             }
         });
     } 
-    getData();
-
-
-
-
-  $(document).on("click", "#filter", function(e) {
-        e.preventDefault();
-
-        
-    var id_kab = $("#kabupaten").val();
-        var id_jenis = $("#jenis_ibadah").val();
-        // console.log("ini jenis="+id_jenis+" dan ini kabupaten="+id_kab);
-
-        if ((id_kab != "") && (id_jenis != "")) {
-      // console.log("ini jenis="+id_jenis+" dan ini kabupaten="+id_kab);
-       $('#data_tabel').DataTable().destroy();
-      getData(id_jenis, id_kab);
-    }
-    else if((id_kab != "") && (id_jenis == "")){
-      // console.log("ini kab ="+id_kab);
-       $('#data_tabel').DataTable().destroy();
-      getData('', id_kab);  
-    }
-    else if((id_kab == "") && (id_jenis != "")){
-      // console.log("ini jenis ="+id_jenis); 
-      $('#data_tabel').DataTable().destroy();
-      getData(id_jenis, '');
-    }
-    else{
-      // console.log("ini kosong");
-       $('#data_tabel').DataTable().destroy();
-      getData();
-    }
-
-    });
 </script>
 
 
@@ -354,25 +313,15 @@ mymap.addLayer (new L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}
 
 
 
-<?php foreach($list as $ti ) : ?>
+<?php foreach($list as $bt ) : ?>
 
-  <div class="modal fade" id="modal_detail<?= $ti['ti_id']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modal_detail<?= $$bt['bt_id']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
              <h5 class="modal-title" id="exampleModalLabel mb-2">
 
-              <?php if ($ti['ti_jenis'] == '1'){ ?>
-                <p>Detail Data Masjid</p>
-              <?php } elseif ($ti['ti_jenis'] == '2') { ?>
-                <p>Detail Data Pura</p>
-              <?php } elseif ($ti['ti_jenis'] == '3') { ?>
-                <p>Detail Data Gereja</p>
-              <?php } elseif ($ti['ti_jenis'] == '4') { ?>
-                <p>Detail Data Vihara</p>
-              <?php } elseif ($ti['ti_jenis'] == '5') { ?>
-                <p>Detail Data Klenteng</p>
-              <?php } ?>
+                <p>Detail Data Lapangan </p>
 
              </h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -380,65 +329,23 @@ mymap.addLayer (new L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}
                           </button>
                         </div>
                         <div class="modal-body">
-
-                          <?php if ($ti['ti_jenis'] == '1') { ?>
                               <table class="table table-bordered">
                                 <tbody>
                                   <tr>
-                                    <td>Tipologi</td>
-                                    <td><?= $ti['ti_tipologi']; ?></td>
-                                  </tr>
-                                  <tr>
                                     <td>Nama</td>
-                                    <td><?= $ti['ti_nama']; ?></td>
+                                    <td><?= $bt['bt_nama']; ?></td>
                                   </tr>
                                   <tr>
                                     <td>Alamat</td>
-                                    <td><?= $ti['ti_alamat']; ?></td>
+                                    <td><?= $bt['bt_alamat']; ?></td>
                                   </tr>
                                   <tr>
-                                    <td>Kabupaten</td>
-                                    <td><?= $ti['kab_nama']; ?></td>
+                                    <td>Jam buka </td>
+                                    <td><?= $bt['bt_jam']; ?></td>
                                   </tr>
                                   <tr>
-                                    <td>Kecamatan</td>
-                                    <td><?= $ti['kec_nama']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Luas tanah</td>
-                                    <td><?= $ti['ti_luas_tanah']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Status tanah</td>
-                                    <td><?= $ti['ti_status_tanah']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Luas bangunan</td>
-                                    <td><?= $ti['ti_luas_bangunan']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Tahun berdiri</td>
-                                    <td><?= $ti['ti_tahun_berdiri']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Jamaah</td>
-                                    <td><?= $ti['ti_jamaah']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Imam</td>
-                                    <td><?= $ti['ti_imam']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Khatib</td>
-                                    <td><?= $ti['ti_khatib']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Remaja</td>
-                                    <td><?= $ti['ti_remaja']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>No. Telepon</td>
-                                    <td><?= $ti['ti_telepon']; ?></td>
+                                    <td>Kontak</td>
+                                    <td><?= $bt['bt_kontak']; ?></td>
                                   </tr>
                                   <tr>
                                     <td>Longitude</td>
@@ -450,184 +357,10 @@ mymap.addLayer (new L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}
                                   </tr>
                                   <tr>
                                     <td>Foto</td>
-                                    <td><img src="<?= base_url('assets/foto/tempat_ibadah/').$ti['ti_foto']; ?>" alt="" width="100" class="card-img" style="width: 5rem;"> </td>
+                                    <td><img src="<?= base_url('assets/foto/tempat_ibadah/').$bt['bt_gambar']; ?>" alt="" width="100" class="card-img" style="width: 5rem;"> </td>
                                   </tr>
                                 </tbody>
                               </table>
-                          <?php } elseif ($ti['ti_jenis'] == '2') { ?>
-                             <table class="table table-bordered">
-                                    <tbody>
-                                      <tr>
-                                        <td>Nama</td>
-                                        <td><?= $ti['ti_nama']; ?></td>
-                                      </tr>
-                                      <tr>
-                                        <td>Alamat</td>
-                                        <td><?= $ti['ti_alamat']; ?></td>
-                                      </tr>
-                                      <tr>
-                                        <td>Kabupaten</td>
-                                        <td><?= $ti['kab_nama']; ?></td>
-                                      </tr>
-                                      <tr>
-                                        <td>Kecamatan</td>
-                                        <td><?= $ti['kec_nama']; ?></td>
-                                      </tr>
-                                      <tr>
-                                        <td>Kondisi</td>
-                                        <td><?= $ti['ti_kondisi']; ?></td>
-                                      </tr>
-                                      <tr>
-                                        <td>Luas tanah</td>
-                                        <td><?= $ti['ti_luas_tanah']; ?></td>
-                                      </tr>
-                                      <tr>
-                                        <td>Luas bangunan</td>
-                                        <td><?= $ti['ti_luas_bangunan']; ?></td>
-                                      </tr>
-                                      <tr>
-                                        <td>Longitude</td>
-                                        <td><?= $ti['longitude']; ?></td>
-                                      </tr>
-                                      <tr>
-                                        <td>Latitude</td>
-                                        <td><?= $ti['latitude']; ?></td>
-                                      </tr>
-                                      <tr>
-                                        <td>Foto</td>
-                                        <td><img src="<?= base_url('assets/foto/tempat_ibadah/').$ti['ti_foto']; ?>" alt="" width="100" class="card-img" style="width: 5rem;"> </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                          <?php } elseif ($ti['ti_jenis'] == '3') { ?>
-
-                            <table class="table table-bordered">
-                              <tbody>
-                                <tr>
-                                  <td>Nama</td>
-                                  <td><?= $ti['ti_nama']; ?></td>
-                                </tr>
-                                <tr>
-                                  <td>Alamat</td>
-                                  <td><?= $ti['ti_alamat']; ?></td>
-                                </tr>
-                                <tr>
-                                  <td>Kabupaten</td>
-                                  <td><?= $ti['kab_nama']; ?></td>
-                                </tr>
-                                <tr>
-                                  <td>Kecamatan</td>
-                                  <td><?= $ti['kec_nama']; ?></td>
-                                </tr>
-                               <tr>
-                                  <td>Ketua</td>
-                                  <td><?= $ti['ti_ketua']; ?></td>
-                                </tr>
-                                <tr>
-                                  <td>Keterangan</td>
-                                  <td><?= $ti['ti_keterangan']; ?></td>
-                                </tr>
-                                <tr>
-                                  <td>Longitude</td>
-                                  <td><?= $ti['longitude']; ?></td>
-                                </tr>
-                                <tr>
-                                  <td>Latitude</td>
-                                  <td><?= $ti['latitude']; ?></td>
-                                </tr>
-                                <tr>
-                                  <td>Foto</td>
-                                  <td><img src="<?= base_url('assets/foto/tempat_ibadah/').$ti['ti_foto']; ?>" alt="" width="100" class="card-img" style="width: 5rem;"> </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          <?php } elseif ($ti['ti_jenis'] == '4') { ?>
-                            
-                              <table class="table table-bordered">
-                                <tbody>
-                                  <tr>
-                                    <td>Nama</td>
-                                    <td><?= $ti['ti_nama']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Alamat</td>
-                                    <td><?= $ti['ti_alamat']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Kabupaten</td>
-                                    <td><?= $ti['kab_nama']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Kecamatan</td>
-                                    <td><?= $ti['kec_nama']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Di bawah binaan majelis</td>
-                                    <td><?= $ti['ti_binaan_majelis']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Ketua</td>
-                                    <td><?= $ti['ti_ketua']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Longitude</td>
-                                    <td><?= $ti['longitude']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Latitude</td>
-                                    <td><?= $ti['latitude']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Foto</td>
-                                    <td><img src="<?= base_url('assets/foto/tempat_ibadah/').$ti['ti_foto']; ?>" alt="" width="100" class="card-img" style="width: 5rem;"> </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-
-
-                          <?php } elseif ($ti['ti_jenis'] == '5') { ?>
-
-                              <table class="table table-bordered">
-                                <tbody>
-                                  <tr>
-                                    <td>Nama</td>
-                                    <td><?= $ti['ti_nama']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Alamat</td>
-                                    <td><?= $ti['ti_alamat']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Kabupaten</td>
-                                    <td><?= $ti['kab_nama']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Kecamatan</td>
-                                    <td><?= $ti['kec_nama']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Di bawah binaan majelis</td>
-                                    <td><?= $ti['ti_binaan_majelis']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Ketua</td>
-                                    <td><?= $ti['ti_ketua']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Longitude</td>
-                                    <td><?= $ti['longitude']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Latitude</td>
-                                    <td><?= $ti['latitude']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Foto</td>
-                                    <td><img src="<?= base_url('assets/foto/tempat_ibadah/').$ti['ti_foto']; ?>" alt="" width="100" class="card-img" style="width: 5rem;"> </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                          <?php } ?>
                         </div>
                       </div>
                     </div>
