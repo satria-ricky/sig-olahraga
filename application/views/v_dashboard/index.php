@@ -64,7 +64,6 @@
           <div class="navbar-nav ml-auto" >
             <a class="nav-link page-scroll" href="#data_tempat_ibadah" >Data</a>
             <a class="nav-link page-scroll" href="#peta_tempat_ibadah" >Map</a>
-            <a class="nav-link page-scroll" href="#contact_us" >Contact Us</a>
             <a class="nav-link page-scroll" href="<?= base_url(); ?>c_login">Log in</a>
           </div>
         </div>
@@ -77,9 +76,9 @@
 
 <div class="jumbotron jumbotron-fluid">
   <!-- <div class="container"> -->
-    <h1 class="display-4"> 
+  
     	<img src="<?= base_url('assets/foto/'); ?>bg.jpg" class="img-fluid" alt="Responsive image" style="width:1350px;  height: 300px; align:center;">
-    </h1>
+    
     <!-- <p class="lead"></p>
   </div> -->
 </div>	
@@ -105,11 +104,8 @@
                 <table class="table table-bordered " id="data_tabel" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-  		                <th>Jenis</th>
   		                <th>Nama</th>
 	                    <th>Alamat</th>
-	                    <th>Kabupaten</th>
-	                    <th>Kecamatan</th>
 	                    <th>Aksi</th> 
                     </tr>
                   </thead>
@@ -149,7 +145,7 @@
 
 
 
-<div class="section section-lg text-white" id="contact_us" style="padding-bottom:25px; padding-top: 25px; background-color: #0C6545;">
+<div class="section section-lg text-white" id="contact_us" style="padding-bottom:25px; padding-top: 25px; background-color:#008B8B;">
         <div class="container">
             <div class="text-center">
                 &copy; Copyright. Zaenalabidin
@@ -231,21 +227,13 @@
                 var i = 1;
                  $('#data_tabel').DataTable( {
                   "data": data,
-              "columns": [{ 
-
-                    "data": "jenis_nama"
-                  },
-                  {
+              "columns": [
+              
+                        {
                             "data": "ti_nama"
                         },
                         {
                             "data": "ti_alamat"
-                        },
-                        {
-                            "data": "kab_nama",
-                        },
-                        {
-                            "data": "kec_nama"
                         },
                         {
                             "data": "ti_id",
