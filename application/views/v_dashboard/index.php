@@ -46,7 +46,7 @@
 		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
 
 
-    <title>Badminton - Kota Mataram</title>
+    <title>Bulu Tangkis - Kota Mataram</title>
   </head>
   <body>
         
@@ -56,7 +56,7 @@
 
     	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container"> 
-        <a class="navbar-brand font-weight-bolder page-scroll" href="#home"> Kemenag NTB</a>
+        <a class="navbar-brand font-weight-bolder page-scroll" href="#home"> BULU TANGKIS - KOTA MATARAM</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -98,7 +98,7 @@
           
           <div class="card shadow mb-4 mr-5 ml-5">
             <div class="card-header py-3">
-              <h4 class="font-weight-bold"> Daftar Lapangan Bulu Tangkis</h4>  
+              <h4 class="font-weight-bold"> Daftar Lapangan</h4>  
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -135,7 +135,7 @@
           <div class="card shadow mb-4">
             <div class="card-header py-3">
   
-              <h4 class="font-weight-bold "> Peta Lokasi Lapangan Bulu Tangkis</h4>  
+              <h4 class="font-weight-bold "> Peta Lokasi </h4>  
             </div>
 
 
@@ -151,31 +151,8 @@
 
 <div class="section section-lg text-white" id="contact_us" style="padding-bottom:25px; padding-top: 25px; background-color: #0C6545;">
         <div class="container">
-            <div class="row">
-                <div class="col-sm-7">
-                    <img src="<?= base_url('assets/foto/'); ?>kemenag_ntb.png" class="img-fluid" alt="Responsive image">
-                </div>
-                <div class="col-sm-5">
-                    
-                        
-                            <h3>KONTAK INFORMASI</h3>
-                            <div class="media">
-                                
-                                <div class="media-body media-middle"><i class="fa fa-phone"></i>  (0370) 623375</div>
-                            </div>
-                            <div class="media">
-                                <div class="media-body media-middle"><i class="fa fa-location-arrow"></i>  Jl. Udayana Nomor 6 Mataram NTB</div>
-                            </div>
-                            <div class="media">
-                                <div class="media-body media-middle"><i class="fa fa-envelope"></i>  kanwilntb@kemenag.go.id</div>
-                            </div>
-                        
-                    </div>
-                </div>
-            </div>
-            <hr class="sidebar-divider" style="background-color: white;  width: 75%;">
             <div class="text-center">
-                &copy; Copyright. Subbag Inmas Kanwil Kementerian Agama Prov.NTB.
+                &copy; Copyright. Zaenalabidin
             </div>
         </div>
     </div>
