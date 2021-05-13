@@ -154,27 +154,15 @@
     </div>
 
 
-
-
-
 </body>
-
-
-    <!-- Optional JavaScript; choose one of the two! -->
-
- 
-
-
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
     <script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-
-  
-  
 <script src="<?= base_url('assets/dashboard/'); ?>script.js"></script>
+  
   
 <script> 
   getData();
@@ -213,14 +201,10 @@
 
 <script> 
 getData_peta();
-function getData_peta(kab, jenis){
+
+function getData_peta(){
   $.ajax({
         url: "<?php echo base_url(); ?>c_dashboard/load_data_to_tabel",
-        type: "post",
-        data: {
-            id_jenis: jenis,
-            id_kab: kab
-        },
         dataType: "json",
         success: function(data) {
             // console.log(data);
@@ -230,7 +214,7 @@ function getData_peta(kab, jenis){
       var datasearch = [];
       for(var i =0;i < data.length; i++){
         if (data[i].latitude != null || data[i].longitude != null) {
-          datasearch.push({"titik_koordinat":[data[i].latitude,data[i].longitude], "jenis":data[i].jenis_nama});
+          datasearch.push({"titik_koordinat":[data[i].latitude,data[i].longitude], "nama":data[i].bt_nama});
         }
       }
 
@@ -276,59 +260,46 @@ mymap.addLayer (new L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}
       if (data[i].latitude != null || data[i].longitude != null) {
         
         var icon_map = L.icon({
-                iconUrl: '<?= base_url('assets/foto/tempat_ibadah/mapicon/')?>'+data[i].mapicon,
+                iconUrl: '<?= base_url('assets/foto/bt/mapicon/bt.png')?>',
                 iconSize:     [40, 40], // size of the icon
             });
 
             
-            var nama_ti = data[i].ti_nama;
+            var nama_bt = data[i].bt_nama;
             var titik_koordinat = [data[i].latitude, data[i].longitude];
             
-            marker = new L.Marker(new L.latLng(titik_koordinat), {title: nama_ti, icon:icon_map});
+            marker = new L.Marker(new L.latLng(titik_koordinat), {title: nama_bt, icon:icon_map});
 
-            marker.bindPopup("<b>"+data[i].ti_nama+"</b><br>"+data[i].ti_alamat+"<br> <div class='row ml-1'><h6><a href='"+data[i].ti_id+"' class='btn btn-sm btn-outline-info' data-toggle='modal' data-target='#modal_detail"+data[i].ti_id+"'>Detail</a></h6><h6><a href='https://www.google.com/maps/dir/?api=1&origin="+location.coords.latitude+","+location.coords.longitude+"&destination="+data[i].latitude+","+data[i].longitude+"' class='btn btn-sm btn-outline-success' target='_blank'>Rute</a></h6></div>");
+            marker.bindPopup("<b>"+data[i].bt_nama+"</b><br>"+data[i].bt_alamat+"<br> <div class='row ml-1'><h6><a href='"+data[i].bt_id+"' class='btn btn-sm btn-outline-info' data-toggle='modal' data-target='#modal_detail"+data[i].bt_id+"'>Detail</a></h6><h6><a href='https://www.google.com/maps/dir/?api=1&origin="+location.coords.latitude+","+location.coords.longitude+"&destination="+data[i].latitude+","+data[i].longitude+"' class='btn btn-sm btn-outline-success' target='_blank'>Rute</a></h6></div>");
             
             markersLayer.addLayer(marker);
 
       }
     }
 
-
-
-
   });
-
-
         }
 
     });
 
 }
-
-
 </script>
 
-
-
-
-
-
 <?php foreach($list as $bt ) : ?>
-
-  <div class="modal fade" id="modal_detail<?= $$bt['bt_id']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modal_detail<?= $bt['bt_id'];?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-             <h5 class="modal-title" id="exampleModalLabel mb-2">
-
+             <h5 class="modal-title" id="exampleModalLabel">
                 <p>Detail Data Lapangan </p>
-
              </h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
+                        
                         <div class="modal-body">
+                        <img src="<?= base_url('assets/foto/bt/').$bt['bt_gambar']; ?>" alt="" width="100%" class="card-img mb-2" style="width: 100%;">
                               <table class="table table-bordered">
                                 <tbody>
                                   <tr>
@@ -349,15 +320,11 @@ mymap.addLayer (new L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}
                                   </tr>
                                   <tr>
                                     <td>Longitude</td>
-                                    <td><?= $ti['longitude']; ?></td>
+                                    <td><?= $bt['longitude']; ?></td>
                                   </tr>
                                   <tr>
                                     <td>Latitude</td>
-                                    <td><?= $ti['latitude']; ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Foto</td>
-                                    <td><img src="<?= base_url('assets/foto/tempat_ibadah/').$bt['bt_gambar']; ?>" alt="" width="100" class="card-img" style="width: 5rem;"> </td>
+                                    <td><?= $bt['latitude']; ?></td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -367,5 +334,3 @@ mymap.addLayer (new L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}
                   </div>
           
 <?php endforeach; ?>
-
-
