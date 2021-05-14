@@ -10,28 +10,12 @@ class C_profile extends CI_Controller {
 
     public function index(){
         $v_data['judul'] = 'PROFILE';
-        $v_id_username = $this->session->userdata('id_username');
-        $v_role = $this->session->userdata('role');
-        if ($v_role == 1) {
-            $v_data['hilangkan'] = '';
-        }else{
-            $v_data['hilangkan'] = 'd-none';
-        }
-
-        
+        $v_id_username = $this->session->userdata('id_username'); 
 
         $v_data['data_pengguna'] = $this->M_admin->get_pengguna($v_id_username);
 
 
-        $v_nama_bidang['data_bidang'] = $this->M_profile->get_nama_bidang($v_data['data_pengguna']['admin_bidang']);
-        $v_data['nama_bidang'] = $v_nama_bidang['data_bidang']['bidang_nama'];
-    
-
         $this->form_validation->set_rules('nama', 'Nama', 'required|trim', [
-            'required' => 'Form tidak boleh kosong!',
-        ]);
-
-        $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim', [
             'required' => 'Form tidak boleh kosong!',
         ]);
 
@@ -52,20 +36,11 @@ class C_profile extends CI_Controller {
             $this->load->view('v_profile/index',$v_data);
             $this->load->view('templates/footer');
         }else{
-
             $username_input = $this->input->post('username');
             $v_nama = $this->input->post('nama');
             $v_password = $this->input->post('password');
             $v_alamat = $this->input->post('alamat');
             $upload_foto = $_FILES['foto']['name'];
-
-
-            if($this->M_profile->cek_username($username_input,$v_id_username)){
-            //  echo "ada / gagal";
-                $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">Gagal mengubah! Username telah terdaftar!</div>');
-                redirect('c_profile');
-            }else{
-                
                 if($upload_foto){
                 
                     $config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -104,14 +79,9 @@ class C_profile extends CI_Controller {
                         'admin_username' => $username_input
                     ];
                 }
-    
-    
-    
                 $this->M_profile->edit_profile($v_id_username, $v_data);
                 $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Profile berhasil diubah!</div>');
-                redirect('c_profile');
-
-            }
+                redirect('c_profile');            
         }
     }
 

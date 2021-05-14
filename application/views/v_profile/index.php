@@ -17,15 +17,8 @@
             <div class="col-md-8 ">
 
 
-              <?= form_open_multipart('c_profile'); ?>
+            <?= form_open_multipart('c_profile'); ?>
             
-            <div class="form-group row mt-3">
-              <label for="basic-url" class="col-sm-2 col-form-label mt-2" >Sub.Bag</label>
-                <div class="col-sm-9 mt-2" >
-                  <input type="text" class="form-control-plaintext" id="basic-url" aria-describedby="basic-addon3" name="bidang" value="<?= $nama_bidang; ?>" readonly>
-                </div>
-            </div>
-
             <div class="form-group row mt-1">
               <label for="basic-url" class="col-sm-2 col-form-label mt-1" >Username</label>
                 <div class="col-sm-9 mt-1" >

@@ -36,23 +36,6 @@ class C_admin extends CI_Controller {
         $this->load->view('v_daftar_admin/index', $v_data);
         $this->load->view('templates/footer');
     }
-
-    
-    
-    function validasi_bidang($v_bidang)
-    {
-        // 'none' is the first option that is default "-------Choose City-------"
-        if($v_bidang == "none"){
-            $this->form_validation->set_message('validasi_bidang', 'Pilih Subbag!');
-        return false;
-        } else{
-            return true;
-        }
-
-    }
-
-
-
     
 
     public function tambah()
