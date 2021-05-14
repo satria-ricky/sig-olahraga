@@ -16,27 +16,7 @@ class C_tempat_ibadah extends CI_Controller {
 
 
     public function load_beranda(){
-        $v_kab = $this->input->post('id_kab');
-
-
-       if( strlen($v_kab) != 0 ){
-            $v_data['total_masjid'] = $this->M_tempat_ibadah->total_masjid_by_kab($v_kab);
-            $v_data['total_pura'] = $this->M_tempat_ibadah->total_pura_by_kab($v_kab);
-            $v_data['total_gereja'] = $this->M_tempat_ibadah->total_gereja_by_kab($v_kab);
-            $v_data['total_vihara'] = $this->M_tempat_ibadah->total_vihara_by_kab($v_kab);
-            $v_data['total_klenteng'] = $this->M_tempat_ibadah->total_klenteng_by_kab($v_kab);
-
-        }else{
-            $v_data['total_masjid'] = $this->M_tempat_ibadah->total_masjid();
-            $v_data['total_pura'] = $this->M_tempat_ibadah->total_pura();
-            $v_data['total_gereja'] = $this->M_tempat_ibadah->total_gereja();
-            $v_data['total_vihara'] = $this->M_tempat_ibadah->total_vihara();
-            $v_data['total_klenteng'] = $this->M_tempat_ibadah->total_klenteng();
-
-            
-        }
-
-        
+    
             $output = '
             
             <div class="col-xl-3 col-md-6 mb-4" onclick="masjid()" style="cursor: pointer;">
@@ -47,7 +27,7 @@ class C_tempat_ibadah extends CI_Controller {
                       <div class="text-large font-weight-bold text-primary text-uppercase mb-1">Masjid</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"> 
 
-                        '.$v_data['total_masjid'].'
+                        '.$this->M_bulu_tangkis->total_bt().'
 
                       </div>
                     </div>
@@ -57,91 +37,6 @@ class C_tempat_ibadah extends CI_Controller {
                   </div>
                 </div>
               </div> 
-            </div>
-            
-            
-
-
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4" onclick="gereja()" style="cursor: pointer;">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-large font-weight-bold text-success text-uppercase mb-1">Gereja</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                        
-                        '.$v_data['total_gereja'].'
-
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-church fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-xl-3 col-md-6 mb-4" onclick="pura()" style="cursor: pointer;">
-              <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-large font-weight-bold text-primary text-uppercase mb-1">Pura</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                        
-                        '.$v_data['total_pura'].'
-
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-gopuram fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4" onclick="vihara()" style="cursor: pointer;">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-large font-weight-bold text-success text-uppercase mb-1">Vihara</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                        
-                        '.$v_data['total_vihara'].'
-
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-vihara fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-xl-3 col-md-6 mb-4" onclick="klenteng()" style="cursor: pointer;">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-large font-weight-bold text-success text-uppercase mb-1">Klenteng</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                          
-                          '.$v_data['total_klenteng'].'
-
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-gopuram fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>';
 
             echo json_encode($output);
@@ -362,8 +257,6 @@ class C_tempat_ibadah extends CI_Controller {
         $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim', [
             'required' => 'Form tidak boleh kosong!',
         ]);
-
-        
 
 
         if($this->form_validation->run() == false){

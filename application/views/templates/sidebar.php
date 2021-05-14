@@ -27,51 +27,27 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="<?= base_url(); ?>c_tempat_ibadah/beranda">
+        <a class="nav-link" href="<?= base_url(); ?>c_bulu_tangkis/beranda">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Beranda</span></a>
       </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider">
-  
 
       <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTw" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-list"></i>
-          <span>Daftar tempat ibadah</span>
-        </a>
-        <div id="collapseTw" class="collapse " aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Daftar data:</h6>
-            <a class="collapse-item" href="<?= base_url(); ?>c_tempat_ibadah/masjid">Masjid</a>
-            <a class="collapse-item" href="<?= base_url(); ?>c_tempat_ibadah/gereja">Gereja</a>
-            <a class="collapse-item" href="<?= base_url(); ?>c_tempat_ibadah/pura">Pura</a>
-            <a class="collapse-item" href="<?= base_url(); ?>c_tempat_ibadah/vihara">Vihara</a>
-            <a class="collapse-item" href="<?= base_url(); ?>c_tempat_ibadah/klenteng">Klenteng</a>
-          </div>
-        </div>
+        <a class="nav-link" href="<?= base_url(); ?>c_bulu_tangkis/daftar">
+        <i class="fas fa-fw fa-list"></i>
+          <span>Daftar lapangan </span></a>
       </li>
 
-
+      <hr class="sidebar-divider">
 
       <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-plus"></i>
-          <span>Tambah tempat ibadah</span>
-        </a>
-        <div id="collapseTwo" class="collapse " aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Tambah data:</h6>
-            <a class="collapse-item" href="<?= base_url('c_tempat_ibadah/tambahMasjid'); ?>">Masjid</a>
-            <a class="collapse-item" href="<?= base_url('c_tempat_ibadah/tambahGereja'); ?>">Gereja</a>
-            <a class="collapse-item" href="<?= base_url('c_tempat_ibadah/tambahPura'); ?>">Pura</a>
-            <a class="collapse-item" href="<?= base_url('c_tempat_ibadah/tambahVihara'); ?>">Vihara</a>
-            <a class="collapse-item" href="<?= base_url('c_tempat_ibadah/tambahKlenteng'); ?>">Klenteng</a>
-          </div>
-        </div>
+        <a class="nav-link" href="<?= base_url(); ?>c_bulu_tangkis/tambah">
+        <i class="fas fa-fw fa-plus"></i>
+          <span>Tambah lapangan </span></a>
       </li>
-
 
        <hr class="sidebar-divider" >
       
