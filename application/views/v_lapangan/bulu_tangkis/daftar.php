@@ -3,6 +3,8 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
+        <a href="<?= base_url('c_bulu_tangkis/tambah'); ?>" class="btn btn-info mb-2"><i class="fa fa-plus"></i> Tambah data</a>
+
 
           <?= $this->session->flashdata('pesan'); ?>
           <!-- DataTales Example -->

@@ -51,7 +51,7 @@ function getData(){
 }
 
 
-function masjid() {
+function lapangan() {
   // console.log("masjid");
   window.location.href="<?= base_url(); ?>c_bulu_tangkis/daftar";
 }

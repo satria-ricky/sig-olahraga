@@ -21,7 +21,7 @@ class C_bulu_tangkis extends CI_Controller {
     
             $output = '
             
-            <div class="col-xl-3 col-md-6 mb-3 mt-2 ml-2" onclick="masjid()" style="cursor: pointer;">
+            <div class="col-xl-3 col-md-6 mb-3 mt-2 ml-2" onclick="lapangan()" style="cursor: pointer;">
               <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -80,7 +80,7 @@ class C_bulu_tangkis extends CI_Controller {
 
 
     public function tambah(){
-        $v_data['judul'] = 'TAMBAH DATA MASJID';
+        $v_data['judul'] = 'TAMBAH DATA LAPANGAN';
 
         $v_id_username = $this->session->userdata('id_username');
         $v_data['data_pengguna'] = $this->M_admin->get_pengguna($v_id_username);
@@ -88,7 +88,7 @@ class C_bulu_tangkis extends CI_Controller {
         $v_data['tittle'] = 'Tambah data lapangan';
 
     
-        $this->form_validation->set_rules('nama_masjid', 'Nama_masjid', 'required|trim', [
+        $this->form_validation->set_rules('nama_lapangan', 'Nama_lapangan', 'required|trim', [
             'required' => 'Form tidak boleh kosong!',
         ]);
 
@@ -101,27 +101,17 @@ class C_bulu_tangkis extends CI_Controller {
             $this->load->view('templates/header', $v_data);
             $this->load->view('templates/sidebar',$v_data);
             $this->load->view('templates/topbar', $v_data);
-            $this->load->view('v_daftar_tempat_ibadah/masjid/tambah_masjid', $v_data);
+            $this->load->view('v_lapangan/bulu_tangkis/tambah', $v_data);
             $this->load->view('templates/footer');
 
         }else{
-            $v_kabupaten = $this->input->post('scrollkab');
-            $v_kecamatan = $this->input->post('scrollkec');
-            $v_tipologi = $this->input->post('scrolltip');
-            $v_nama     = $this->input->post('nama_masjid');
+            $v_nama     = $this->input->post('nama_lapangan');
             $v_alamat = $this->input->post('alamat');
-            $v_luas_tanah = $this->input->post('luas_tanah');
-            $v_status_tanah = $this->input->post('status_tanah');
-            $v_luas_bangunan = $this->input->post('luas_bangunan');
-            $v_tahun_berdiri = $this->input->post('tahun_berdiri');
-            $v_jamaah = $this->input->post('jamaah');
-            $v_imam = $this->input->post('imam');
-            $v_khatib = $this->input->post('khatib');
-            $v_remaja = $this->input->post('remaja');
-            $v_telepon = $this->input->post('telepon');
             $v_longitude = $this->input->post('longitude');
             $v_latitude = $this->input->post('latitude');
-
+            $v_jam_buka = $this->input->post('jam_buka');
+            $v_jam_tutup = $this->input->post('jam_tutup');
+            $v_kontak = $this->input->post('kontak');
             $upload_foto = $_FILES['foto']['name'];
 
             if($upload_foto){
@@ -136,24 +126,12 @@ class C_bulu_tangkis extends CI_Controller {
                     $v_nama_foto = $this->upload->data('file_name');
                                     
                     $v_data = [
-                        'ti_jenis' => '1',
-                        'ti_tipologi' => $v_tipologi,
-                        'ti_nama' => $v_nama,
-                        'ti_alamat' => $v_alamat,
-                        'ti_kabupaten' => $v_kabupaten,
-                        'ti_kecamatan' => $v_kecamatan,
-                        'ti_luas_tanah' => $v_luas_tanah,
-                        'ti_status_tanah' => $v_status_tanah,
-                        'ti_luas_bangunan' => $v_luas_bangunan,
-                        'ti_tahun_berdiri' => $v_tahun_berdiri,
-                        'ti_jamaah' => $v_jamaah,
-                        'ti_imam' => $v_imam,
-                        'ti_khatib' => $v_khatib,
-                        'ti_remaja' => $v_remaja,
-                        'ti_telepon' => $v_telepon,
+                        'bt_nama' => $v_nama,
+                        'bt_alamat' => $v_alamat,
+                        'bt_kontak' => $v_kontak,
                         'longitude' => $v_longitude,
                         'latitude' => $v_latitude,
-                        'ti_foto' => $v_nama_foto
+                        'bt_foto' => $v_nama_foto
                     ];
                 }
                 else
@@ -180,13 +158,13 @@ class C_bulu_tangkis extends CI_Controller {
                         'ti_telepon' => $v_telepon,
                         'longitude' => $v_longitude,
                         'latitude' => $v_latitude,
-                        'ti_foto' => 'masjid.png'
+                        'ti_foto' => 'lapangan.png'
                     ];
             }
 
             $this->M_tempat_ibadah->create_ti($v_data);
             $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil ditambah!</div>');
-            redirect('c_tempat_ibadah/masjid');
+            redirect('c_tempat_ibadah/lapangan');
 
         }
     }
@@ -195,7 +173,7 @@ class C_bulu_tangkis extends CI_Controller {
 
     public function edit($v_id)
     {
-        $v_data['judul'] = 'EDIT DATA MASJID';
+        $v_data['judul'] = 'EDIT DATA lapangan';
 
         $v_role = $this->session->userdata('role');
         if ($v_role == 1) {
@@ -210,7 +188,7 @@ class C_bulu_tangkis extends CI_Controller {
 
         $v_data['tempat_ibadah'] = $this->M_tempat_ibadah->selectById($v_id);
 
-        $v_data['list_tipologi'] = ['Masjid Jami', 'Masjid Raya'];
+       
         $v_data['list_kabupaten'] = $this->M_kab_kec->selectAllkabupaten();
         $v_data['list_kecamatan'] = $this->M_tempat_ibadah->selectKecamatan($v_data['tempat_ibadah']['ti_kabupaten']);
         
