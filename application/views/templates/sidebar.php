@@ -34,12 +34,18 @@
 
       <!-- Divider -->
       <hr class="sidebar-divider">
-
       <li class="nav-item">
-        <a class="nav-link" href="<?= base_url(); ?>c_bulu_tangkis/daftar">
-        <i class="fas fa-fw fa-list"></i>
-          <span>Daftar lapangan </span></a>
-      </li>
+        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTw" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-list"></i>
+          <span>Daftar lapangan </span>
+        </a>
+        <div id="collapseTw" class="collapse " aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Daftar data:</h6>
+            <a class="collapse-item" href="<?= base_url(); ?>c_bulu_tangkis/daftar">Telah terverifikasi</a>
+            <a class="collapse-item" href="<?= base_url(); ?>c_bulu_tangkis/daftarUn">Belum terverifikasi</a>
+          </div>
+        </div>
 
       <hr class="sidebar-divider">
 
