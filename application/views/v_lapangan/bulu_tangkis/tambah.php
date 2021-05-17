@@ -51,15 +51,35 @@
                     </div>
                   </div>
 
-                  <label for="basic-url">Jam buka</label>
-                  <div class="form-group ">
-                    <input type="number" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="jam_buka" value="<?= set_value('jam_buka'); ?>">
+
+                  <div class="btn-group">
+                    <div class="form-group mr-1"> 
+                        <label for="basic-url">Jam buka</label>
+                        <input type="time" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="jam_buka" value="<?= set_value('jam_buka'); ?>">
+                        <?= form_error('jam_buka', '<small class="text-danger">', '</small>'); ?>
+                    </div>
+                    <div class="form-group ">
+                      <label for="basic-url">Jam tutup</label>
+                      <input type="time" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="jam_tutup" value="<?= set_value('jam_tutup'); ?>">
+                    </div>
                   </div>
+
                   
-                  <label for="basic-url">Jam tutup</label>
+                  <label for="basic-url">Status lapangan</label>
                   <div class="form-group ">
-                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="jam_tutup" value="<?= set_value('jam_tutup'); ?>">
+                            <select class="custom-select " id="status_lapangan" name="status_lapangan">
+                              <option value="">--Pilih status--</option>
+
+                              <?php foreach($list_status as $stts ) : ?>
+                                <option value="<?= $stts['stts_id']; ?>"><?= $stts['stts_nama']; ?></option>
+                              <?php endforeach; ?>
+                              
+                            </select>
+                            <?= form_error('status_lapangan', '<small class="text-danger">', '</small>'); ?>
                   </div>
+
+
+
 
                 </div>
     </div>
@@ -71,7 +91,7 @@
 
                 <label for="basic-url">Kontak</label>
                   <div class="form-group ">
-                    <input type="number" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="kontak" value="<?= set_value('kontak'); ?>">
+                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="kontak" value="<?= set_value('kontak'); ?>">
                   </div>
 
                   <label for="basic-url">Foto</label>
@@ -94,89 +114,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     
 <script> 
-    function get_peta_by_kab() {
-
-      var id_kab = $("#kabupaten").val();
-        
-
-      if(id_kab.length != 0){
-        // console.log("ini kab ="+id_kab);
-        get_kab_by_id(id_kab);
-      }
-      else{
-        // console.log("kosong");
-        getData_peta();
-      }
-
-    }
-
- getData_peta();
-
-  function get_kab_by_id(kab){
-    
-    $.ajax({
-          url: "<?php echo base_url(); ?>c_dashboard/load_kab_by",
-          type: "post",
-          data: {id_kab: kab},
-          dataType: "json",
-          success: function(data) {
-              // console.log(data.kab_latitude);
-              getData_peta_kab(data.kab_latitude, data.kab_longitude);
-          }
-    });
-
-  }
-
-  
-  function getData_peta_kab(lat, long){
-
-    document.getElementById('mapid').innerHTML = "<div id='data_peta' style='height: 450px;'></div>";
-
-    var curLocation=[0,0];
-    if (curLocation[0]==0 && curLocation[1]==0) {
-      curLocation =[lat, long]; 
-    }
-
-    var mymap = L.map('data_peta').setView([lat, long], 13);
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-          '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-          'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-          id: 'mapbox/streets-v11'
-    }).addTo(mymap);
-
-
-    mymap.attributionControl.setPrefix(false);
-    var marker = new L.marker(curLocation, {
-      draggable:'true'
-    });
-
-    marker.on('dragend', function(event) {
-    var position = marker.getLatLng();
-    marker.setLatLng(position,{
-      draggable : 'true'
-      }).bindPopup(position).update();
-      $("#Latitude").val(position.lat);
-      $("#Longitude").val(position.lng).keyup();
-      console.log(position.lat, position.lng)
-
-    });
-
-    $("#Latitude, #Longitude").change(function(){
-      var position =[parseInt($("#Latitude").val()), parseInt($("#Longitude").val())];
-      marker.setLatLng(position, {
-      draggable : 'true'
-      }).bindPopup(position).update();
-      mymap.panTo(position);
-    });
-    mymap.addLayer(marker);
-
-                               
-
-
-}
-
-
+getData_peta();
 function getData_peta(){
   $.ajax({
         url: "<?php echo base_url(); ?>c_dashboard/load_data_to_tabel",
@@ -247,32 +185,9 @@ function getLocation() {
           document.getElementById("Longitude").value = location.coords.longitude;
 
         });
-        alert('Titik koordinat berhasil di set!');
+        alert('Titik lokasi berhasil di set!');
 }
 
 
-
-</script>
-
-<script> 
-  $(document).ready(function(){
-            $('#kabupaten').change(function(){
-                //Selected value
-                var id = $(this).val();
-                // console.log(id); 
-                $.ajax({
-                  type: "POST",
-                  url: "<?= base_url('c_tempat_ibadah/getKecamatan'); ?>",
-                  data: {
-                    id : id
-                  },
-                  dataType : "JSON",
-                  success: function(response){
-                    $('#kecamatan').html(response);
-                  }
-	              
-                });
-            });
-        });
 
 </script>

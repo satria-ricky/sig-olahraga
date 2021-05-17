@@ -11,12 +11,7 @@ class C_bulu_tangkis extends CI_Controller {
         $this->load->library('googlemaps');
     }
 
-    
-    public function load_data_to_tabel(){
-		$data = $this->M_bulu_tangkis->select_bulu_tangkis();
-		echo json_encode($data);	
-	}
-
+//BERANDA
     public function load_beranda(){
     
             $output = '
@@ -60,6 +55,11 @@ class C_bulu_tangkis extends CI_Controller {
         
     }
 
+//DAFTAR LAPANGAN
+    public function load_data_to_tabel(){
+        $data = $this->M_bulu_tangkis->select_bulu_tangkis();
+        echo json_encode($data);	
+    }
 
     public function daftar(){
         $v_data['judul'] = 'DAFTAR LAPANGAN';
@@ -79,98 +79,7 @@ class C_bulu_tangkis extends CI_Controller {
     }
 
 
-    public function tambah(){
-        $v_data['judul'] = 'TAMBAH DATA LAPANGAN';
-
-        $v_id_username = $this->session->userdata('id_username');
-        $v_data['data_pengguna'] = $this->M_admin->get_pengguna($v_id_username);
-
-        $v_data['tittle'] = 'Tambah data lapangan';
-
     
-        $this->form_validation->set_rules('nama_lapangan', 'Nama_lapangan', 'required|trim', [
-            'required' => 'Form tidak boleh kosong!',
-        ]);
-
-        $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim', [
-            'required' => 'Form tidak boleh kosong!',
-        ]);
-
-
-        if($this->form_validation->run() == false){
-            $this->load->view('templates/header', $v_data);
-            $this->load->view('templates/sidebar',$v_data);
-            $this->load->view('templates/topbar', $v_data);
-            $this->load->view('v_lapangan/bulu_tangkis/tambah', $v_data);
-            $this->load->view('templates/footer');
-
-        }else{
-            $v_nama     = $this->input->post('nama_lapangan');
-            $v_alamat = $this->input->post('alamat');
-            $v_longitude = $this->input->post('longitude');
-            $v_latitude = $this->input->post('latitude');
-            $v_jam_buka = $this->input->post('jam_buka');
-            $v_jam_tutup = $this->input->post('jam_tutup');
-            $v_kontak = $this->input->post('kontak');
-            $upload_foto = $_FILES['foto']['name'];
-
-            if($upload_foto){
-                
-                $config['allowed_types'] = 'gif|jpg|png|jpeg';
-                $config['max_size']     = '15000';
-                $config['upload_path'] = './assets/foto/tempat_ibadah/';
-                    
-                $this->load->library('upload', $config);
-
-                if ($this->upload->do_upload('foto')){
-                    $v_nama_foto = $this->upload->data('file_name');
-                                    
-                    $v_data = [
-                        'bt_nama' => $v_nama,
-                        'bt_alamat' => $v_alamat,
-                        'bt_kontak' => $v_kontak,
-                        'longitude' => $v_longitude,
-                        'latitude' => $v_latitude,
-                        'bt_foto' => $v_nama_foto
-                    ];
-                }
-                else
-                {
-                    echo $this->upload->display_errors();
-                }
-
-            }else{
-                $v_data = [
-                        'ti_jenis' => '1',
-                        'ti_tipologi' => $v_tipologi,
-                        'ti_nama' => $v_nama,
-                        'ti_alamat' => $v_alamat,
-                        'ti_kabupaten' => $v_kabupaten,
-                        'ti_kecamatan' => $v_kecamatan,
-                        'ti_luas_tanah' => $v_luas_tanah,
-                        'ti_status_tanah' => $v_status_tanah,
-                        'ti_luas_bangunan' => $v_luas_bangunan,
-                        'ti_tahun_berdiri' => $v_tahun_berdiri,
-                        'ti_jamaah' => $v_jamaah,
-                        'ti_imam' => $v_imam,
-                        'ti_khatib' => $v_khatib,
-                        'ti_remaja' => $v_remaja,
-                        'ti_telepon' => $v_telepon,
-                        'longitude' => $v_longitude,
-                        'latitude' => $v_latitude,
-                        'ti_foto' => 'lapangan.png'
-                    ];
-            }
-
-            $this->M_tempat_ibadah->create_ti($v_data);
-            $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil ditambah!</div>');
-            redirect('c_tempat_ibadah/lapangan');
-
-        }
-    }
-
-
-
     public function edit($v_id)
     {
         $v_data['judul'] = 'EDIT DATA lapangan';
@@ -306,6 +215,113 @@ class C_bulu_tangkis extends CI_Controller {
 
 
     }
+
+
+//TAMBAH DATA LAPANGAN
+    function validasi_status_data($id)
+    {
+        if($id == ""){
+            $this->form_validation->set_message('validasi_status_data', 'Pilih status data lapangan!');
+            return false;
+        } else{
+            return true;
+        }
+
+    }
+
+
+    public function tambah(){
+        $v_data['judul'] = 'TAMBAH DATA LAPANGAN';
+
+        $v_id_username = $this->session->userdata('id_username');
+        $v_data['data_pengguna'] = $this->M_admin->get_pengguna($v_id_username);
+
+        $v_data['list_status'] = $this->M_bulu_tangkis->select_status();
+
+        $v_data['tittle'] = 'Tambah data lapangan';
+
+        
+        $this->form_validation->set_rules('nama_lapangan', 'Nama_lapangan', 'required|trim', [
+            'required' => 'Form tidak boleh kosong!',
+        ]);
+        $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim', [
+            'required' => 'Form tidak boleh kosong!',
+        ]);
+        $this->form_validation->set_rules('jam_buka','Jam_buka','required|trim', [
+            'required' => 'Form tidak boleh kosong!',
+        ]);
+        $this->form_validation->set_rules('status_lapangan','Status_lapangan','required|callback_validasi_status_data');
+
+
+        if($this->form_validation->run() == false){
+            $this->load->view('templates/header', $v_data);
+            $this->load->view('templates/sidebar',$v_data);
+            $this->load->view('templates/topbar', $v_data);
+            $this->load->view('v_lapangan/bulu_tangkis/tambah', $v_data);
+            $this->load->view('templates/footer');
+
+        }else{
+            $v_nama     = $this->input->post('nama_lapangan');
+            $v_alamat = $this->input->post('alamat');
+            $v_longitude = $this->input->post('longitude');
+            $v_latitude = $this->input->post('latitude');
+            $v_jam_buka = $this->input->post('jam_buka');
+            $v_jam_tutup = $this->input->post('jam_tutup');
+            $v_status = $this->input->post('status_lapangan');
+            $v_kontak = $this->input->post('kontak');
+            $upload_foto = $_FILES['foto']['name'];
+
+            if($upload_foto){
+                
+                $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                $config['max_size']     = '15000';
+                $config['upload_path'] = './assets/foto/bt/';
+                    
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload('foto')){
+                    $v_nama_foto = $this->upload->data('file_name');             
+                    $v_data = [
+                        'bt_nama' => $v_nama,
+                        'bt_alamat' => $v_alamat,
+                        'longitude' => $v_longitude,
+                        'latitude' => $v_latitude,
+                        'bt_jam_buka' => $v_jam_buka,
+                        'bt_jam_tutup' => $v_jam_tutup,
+                        'bt_status' => $v_status,
+                        'bt_kontak' => $v_kontak,
+                        'bt_foto' => $v_nama_foto
+                    ];
+                }
+                else
+                {
+                    echo $this->upload->display_errors();
+                }
+
+            }else{
+                $v_data = [
+                    'bt_nama' => $v_nama,
+                    'bt_alamat' => $v_alamat,
+                    'longitude' => $v_longitude,
+                    'latitude' => $v_latitude,
+                    'bt_jam_buka' => $v_jam_buka,
+                    'bt_jam_tutup' => $v_jam_tutup,
+                    'bt_status' => $v_status,
+                    'bt_kontak' => $v_kontak,
+                    'bt_foto' => 'bt_default.jpg'
+                ];
+            }
+
+            $this->M_bulu_tangkis->create_bt($v_data);
+            $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil ditambah!</div>');
+            redirect('c_bulu_tangkis/daftar');
+
+        }
+    }
+
+
+
+   
 
 
 
