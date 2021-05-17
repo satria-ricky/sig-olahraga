@@ -43,7 +43,7 @@
                         </div>
                         
                         <div class="modal-body">
-                        <img src="<?= base_url('assets/foto/bt/').$bt['bt_gambar']; ?>" alt="" width="100%" class="card-img mb-2" style="width: 100%;">
+                        <img src="<?= base_url('assets/foto/bt/').$bt['bt_foto']; ?>" alt="" width="100%" class="card-img mb-2" style="width: 100%;">
                               <table class="table table-bordered">
                                 <tbody>
                                   <tr>
@@ -55,8 +55,8 @@
                                     <td><?= $bt['bt_alamat']; ?></td>
                                   </tr>
                                   <tr>
-                                    <td>Jam buka </td>
-                                    <td><?= $bt['bt_jam']; ?></td>
+                                    <td>Jam buka : <?= $bt['bt_jam_buka']; ?> </td>
+                                    <td>Jam tutup : <?= $bt['bt_jam_tutup']; ?> </td>
                                   </tr>
                                   <tr>
                                     <td>Kontak</td>
@@ -70,6 +70,10 @@
                                     <td>Latitude</td>
                                     <td><?= $bt['latitude']; ?></td>
                                   </tr>
+                                  <tr>
+                                    <td>Status</td>
+                                    <td><?= $bt['bt_status']; ?></td>
+                                  </tr>  
                                 </tbody>
                               </table>
                         </div>

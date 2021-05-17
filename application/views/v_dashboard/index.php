@@ -168,7 +168,7 @@
 <div class="section section-lg text-white" id="contact_us" style="padding-bottom:25px; padding-top: 25px; background-color:#008B8B;">
         <div class="container">
             <div class="text-center">
-                &copy; Copyright. Zaenalabidin
+                &copy; Copyright. Zaenalabidin (1800330024)
             </div>
         </div>
     </div>
