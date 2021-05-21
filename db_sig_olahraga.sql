@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 25, 2021 at 04:41 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.2.34
+-- Generation Time: May 21, 2021 at 01:42 PM
+-- Server version: 10.4.18-MariaDB
+-- PHP Version: 7.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_sig_rest`
+-- Database: `db_sig_olahraga`
 --
 
 -- --------------------------------------------------------
@@ -33,7 +33,6 @@ CREATE TABLE `tb_admin` (
   `admin_password` varchar(255) DEFAULT NULL,
   `admin_nama` varchar(255) DEFAULT NULL,
   `admin_alamat` varchar(255) DEFAULT NULL,
-  `admin_bidang` varchar(255) DEFAULT NULL,
   `admin_foto` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -41,10 +40,10 @@ CREATE TABLE `tb_admin` (
 -- Dumping data for table `tb_admin`
 --
 
-INSERT INTO `tb_admin` (`admin_id`, `admin_username`, `admin_password`, `admin_nama`, `admin_alamat`, `admin_bidang`, `admin_foto`) VALUES
-(2, 'username', 'username', 'nama pengguna', 'ab', '1', 'download1.jpeg'),
-(24, 'user1', 'user1', 'nama', 'alamat', '2', 'GKT_Jemaat_Ampenan.jpeg'),
-(25, 'user2', 'user2', 'nama', 'alamat', '1', 'foto.png');
+INSERT INTO `tb_admin` (`admin_id`, `admin_username`, `admin_password`, `admin_nama`, `admin_alamat`, `admin_foto`) VALUES
+(2, 'username', 'username', 'nama pengguna', 'ab', 'download1.jpeg'),
+(24, 'user baru', 'userbaru', 'nama pengguna', ' alamat baru', 'bg.jpg'),
+(25, 'user2', 'user2', 'nama', 'alamat', 'foto.png');
 
 -- --------------------------------------------------------
 
@@ -65,6 +64,38 @@ CREATE TABLE `tb_bidang` (
 INSERT INTO `tb_bidang` (`bidang_id`, `bidang_nama`, `bidang_role`) VALUES
 (1, 'Inmas', 1),
 (2, 'Bimas islam', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_bt`
+--
+
+CREATE TABLE `tb_bt` (
+  `bt_id` int(11) NOT NULL,
+  `bt_nama` varchar(255) DEFAULT NULL,
+  `bt_alamat` varchar(255) DEFAULT NULL,
+  `bt_jam_buka` varchar(255) DEFAULT NULL,
+  `bt_jam_tutup` varchar(255) DEFAULT NULL,
+  `bt_kontak` varchar(255) DEFAULT NULL,
+  `bt_foto` varchar(255) DEFAULT NULL,
+  `latitude` varchar(255) DEFAULT NULL,
+  `longitude` varchar(255) DEFAULT NULL,
+  `bt_status` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_bt`
+--
+
+INSERT INTO `tb_bt` (`bt_id`, `bt_nama`, `bt_alamat`, `bt_jam_buka`, `bt_jam_tutup`, `bt_kontak`, `bt_foto`, `latitude`, `longitude`, `bt_status`) VALUES
+(1, 'lapangan bulu tangkis 1', 'alamat 1', 'jam 1', NULL, 'kontak 1', 'bt_default.jpg', '-8.580181', '116.100741', NULL),
+(2, 'nama 2 ', 'alamat 2 ', 'jam 2', NULL, 'kontak 2', 'gambar 2', 'latitude 2', 'longitude 2', NULL),
+(3, 'lapangan bulu tangkis 1', 'alamat 1', 'jam 1', NULL, 'kontak 1', 'gambar 1', 'latitude 1', 'longitude 1', NULL),
+(4, 'nama 2 ', 'alamat 2 ', 'jam 2', NULL, 'kontak 2', 'gambar 2', 'latitude 2', 'longitude 2', NULL),
+(5, 'nama lapangan baru', 'alamat lapangan baru', '04:55', '15:55', '', 'bt_default.jpg', '', '', 1),
+(6, 'vbnj', 'hjk', '06:57', '03:00', '', 'bt_default.jpg', '-8.5750235', '116.0858066', 2),
+(7, 'nama baru', 'alamat baru', '08:03', '07:58', '0987654', 'gigit.jpg', '-8.578135628497737', '116.10660116437805', 1);
 
 -- --------------------------------------------------------
 
@@ -251,6 +282,25 @@ INSERT INTO `tb_kecamatan` (`kec_id`, `kec_nama`, `id_kab`) VALUES
 (114, 'Wawo', 1),
 (115, 'Wera', 1),
 (116, 'Woha', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_status`
+--
+
+CREATE TABLE `tb_status` (
+  `stts_id` int(11) NOT NULL,
+  `stts_nama` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_status`
+--
+
+INSERT INTO `tb_status` (`stts_id`, `stts_nama`) VALUES
+(1, 'Verifikasi'),
+(2, 'Batalkan verifikasi');
 
 -- --------------------------------------------------------
 
@@ -446,6 +496,12 @@ ALTER TABLE `tb_bidang`
   ADD PRIMARY KEY (`bidang_id`);
 
 --
+-- Indexes for table `tb_bt`
+--
+ALTER TABLE `tb_bt`
+  ADD PRIMARY KEY (`bt_id`);
+
+--
 -- Indexes for table `tb_jenis`
 --
 ALTER TABLE `tb_jenis`
@@ -462,6 +518,12 @@ ALTER TABLE `tb_kabupaten`
 --
 ALTER TABLE `tb_kecamatan`
   ADD PRIMARY KEY (`kec_id`);
+
+--
+-- Indexes for table `tb_status`
+--
+ALTER TABLE `tb_status`
+  ADD PRIMARY KEY (`stts_id`);
 
 --
 -- Indexes for table `tb_ti`
@@ -484,6 +546,12 @@ ALTER TABLE `tb_admin`
 --
 ALTER TABLE `tb_bidang`
   MODIFY `bidang_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `tb_bt`
+--
+ALTER TABLE `tb_bt`
+  MODIFY `bt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tb_kecamatan`
