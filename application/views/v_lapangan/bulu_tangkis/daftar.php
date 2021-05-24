@@ -113,7 +113,7 @@
             },
             dataType: "json",
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                  $('#data_tabel').DataTable( {
                     "data": data,
                     "columns": [
