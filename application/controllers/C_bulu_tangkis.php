@@ -56,10 +56,31 @@ class C_bulu_tangkis extends CI_Controller {
     }
 
 //DAFTAR LAPANGAN
-    public function load_data_to_tabel(){
-        $data = $this->M_bulu_tangkis->selectAllverifikasi();
+    
+    public function load_status(){
+        $data = $this->M_bulu_tangkis->select_status();
         echo json_encode($data);	
+    }    
+
+    public function load_data_to_tabel(){
+        $v_status = $this->input->post('stts_id');
+        
+       
+
+       if( strlen($v_status) != 0 ){
+        
+            $data = $this->M_bulu_tangkis->selectAllbyStatus($v_status);  
+
+        }else{
+           
+            $data = $this->M_bulu_tangkis->selectAllverifikasi();
+        }
+
+            echo json_encode($data);
+
     }
+
+
 
     public function daftar(){
         $v_data['judul'] = 'DAFTAR LAPANGAN';
@@ -68,7 +89,7 @@ class C_bulu_tangkis extends CI_Controller {
         $v_data['data_pengguna'] = $this->M_admin->get_pengguna($v_id_username);
 
 
-        $v_data['list'] = $this->M_bulu_tangkis->selectAllverifikasi();
+        $v_data['list'] = $this->M_bulu_tangkis->select_bulu_tangkis();
 
         $v_data['tittle'] = 'Daftar lapangan';
         $this->load->view('templates/header', $v_data);

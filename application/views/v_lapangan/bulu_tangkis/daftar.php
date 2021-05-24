@@ -9,6 +9,17 @@
           <?= $this->session->flashdata('pesan'); ?>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
+          <div class="card-header py-3">
+              <div class="btn-group ">
+                
+                <select class="custom-select ml-2 mr-2" id="nama_status">
+                      <option value="">--Pilih Status Data Lapangan--</option>
+                </select>
+
+                    <button type="button" id="filter_status" class="btn btn-primary btn-sm ml-2 mr-2">Filter</button> 
+
+              </div>
+            </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered " id="data_tabel" width="100%" cellspacing="0">
@@ -92,12 +103,17 @@
 
 <script type="text/javascript">
 
-    function getData(){
+    function getData(id){
+      // console.log(id);
       $.ajax({
             url: "<?php echo base_url(); ?>c_bulu_tangkis/load_data_to_tabel",
+            type: "post",
+            data: {
+                stts_id : id
+            },
             dataType: "json",
             success: function(data) {
-                // console.log(data);
+                console.log(data);
                  $('#data_tabel').DataTable( {
                     "data": data,
                     "columns": [
@@ -120,5 +136,47 @@
             }
         });
     } 
-    getData();   
+    getData();
+
+
+    function getstatus() {
+        $.ajax({
+            url: "<?php echo base_url(); ?>c_bulu_tangkis/load_status",
+            type: "post",
+            dataType: "json",
+            success: function(data) {
+                // console.log(data)
+                var statusBody = "";
+                for(var key in data){
+                  statusBody +=`<option value="${data[key]['stts_id']}">${data[key]['stts_nama']}</option>`;
+                }
+                $("#nama_status").append(statusBody);
+            }
+        });
+    }
+    getstatus();
+
+
+     $(document).on("click", "#filter_status", function(e) {
+        e.preventDefault();
+
+        
+        var id_status = $("#nama_status").val();
+         
+        if(id_status.length != 0){
+          // console.log("ini stts ="+id_status);
+          $('#data_tabel').DataTable().destroy();
+          getData(id_status);
+        }
+        else{
+          $('#data_tabel').DataTable().destroy();
+          getData();
+          // console.log("gk ada = "+id_status);
+        }
+
+
+         
+
+    });
+
 </script>

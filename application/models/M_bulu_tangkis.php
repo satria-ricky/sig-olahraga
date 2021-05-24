@@ -6,7 +6,7 @@ class M_bulu_tangkis extends CI_model {
     }
 
     public function select_bulu_tangkis(){
-        $sql='SELECT * FROM tb_bt';
+        $sql='SELECT * FROM tb_bt LEFT JOIN tb_status ON tb_bt.bt_status = tb_status.stts_id';
         return $query=$this->db->query($sql)->result_array(); 
     }
 
