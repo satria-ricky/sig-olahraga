@@ -74,7 +74,7 @@
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item text-capitalize" href="#">
+                <a class="dropdown-item text-capitalize" href="<?= base_url(); ?>c_dashboard/tambah">
                   <i class="fas fa-plus fa-sm fa-fw"></i>
                   Tambah data lapangan ?
                 </a>
@@ -319,7 +319,7 @@ mymap.addLayer (new L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}
                         </div>
                         
                         <div class="modal-body">
-                        <img src="<?= base_url('assets/foto/bt/').$bt['bt_gambar']; ?>" alt="" width="100%" class="card-img mb-2" style="width: 100%;">
+                        <img src="<?= base_url('assets/foto/bt/').$bt['bt_foto']; ?>" alt="" width="100%" class="card-img mb-2" style="width: 100%;">
                               <table class="table table-bordered">
                                 <tbody>
                                   <tr>
@@ -332,7 +332,11 @@ mymap.addLayer (new L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}
                                   </tr>
                                   <tr>
                                     <td>Jam buka </td>
-                                    <td><?= $bt['bt_jam']; ?></td>
+                                    <td><?= $bt['bt_jam_buka']; ?></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Jam tutup </td>
+                                    <td><?= $bt['bt_jam_tutup']; ?></td>
                                   </tr>
                                   <tr>
                                     <td>Kontak</td>

@@ -10,12 +10,20 @@ class M_bulu_tangkis extends CI_model {
         return $query=$this->db->query($sql)->result_array(); 
     }
 
-    public function selectAll(){
+
+
+    public function selectAllverifikasi(){
       $sql='SELECT * FROM tb_bt LEFT JOIN tb_status ON tb_bt.bt_status = tb_status.stts_id WHERE bt_status = 1';
       return $query=$this->db->query($sql)->result_array(); 
-  }
+    }
+
+    public function selectAllbyStatus($status){
+      $sql='SELECT * FROM tb_bt LEFT JOIN tb_status ON tb_bt.bt_status = tb_status.stts_id WHERE bt_status=?';
+      return $query=$this->db->query($sql,$status)->result_array(); 
+    }
 
 
+    
     public function total_bt(){
         $sql='SELECT * FROM tb_bt';
         $query=$this->db->query($sql);

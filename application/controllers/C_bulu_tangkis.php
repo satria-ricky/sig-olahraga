@@ -57,7 +57,7 @@ class C_bulu_tangkis extends CI_Controller {
 
 //DAFTAR LAPANGAN
     public function load_data_to_tabel(){
-        $data = $this->M_bulu_tangkis->selectAll();
+        $data = $this->M_bulu_tangkis->selectAllverifikasi();
         echo json_encode($data);	
     }
 
@@ -68,7 +68,7 @@ class C_bulu_tangkis extends CI_Controller {
         $v_data['data_pengguna'] = $this->M_admin->get_pengguna($v_id_username);
 
 
-        $v_data['list'] = $this->M_bulu_tangkis->selectAll();
+        $v_data['list'] = $this->M_bulu_tangkis->selectAllverifikasi();
 
         $v_data['tittle'] = 'Daftar lapangan';
         $this->load->view('templates/header', $v_data);

@@ -72,7 +72,7 @@
                                   </tr>
                                   <tr>
                                     <td>Status</td>
-                                    <td><?= $bt['bt_status']; ?></td>
+                                    <td><?= $bt['stts_nama']; ?></td>
                                   </tr>  
                                 </tbody>
                               </table>
