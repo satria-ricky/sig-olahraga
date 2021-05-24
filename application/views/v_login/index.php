@@ -15,7 +15,7 @@
               <div class="col-lg">
                 <div class="p-5">
                   <div class="text-center">
-                  <h1 class="h4 text-gray-900">Login Page!</h1>
+                  <h1 class="h4 text-gray-900">Login Page Admin!</h1>
                   <img src="<?= base_url('assets/foto/icon_bt.jpg'); ?>" width="" class="card-img" style="width: 9rem;">
                     
 
@@ -38,9 +38,12 @@
                       <?= form_error('password', '<small class="text-danger">', '</small>'); ?>
                     </div>
                     <div class="form-group">
-                    </div><hr>
+                    </div>
+                    <hr>
                     <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>  
+                    <button type="button" onclick="kembali()" class="btn btn-secondary btn-user btn-block"> Kembali menu utama</button>
                   </form>
+                    
                   </div>
                 </div>
               </div>
@@ -54,4 +57,10 @@
 
   </div>
 
+  <script>
   
+  function kembali(){
+    window.location.href="<?= base_url(); ?>c_dashboard";
+  }
+
+  </script>
