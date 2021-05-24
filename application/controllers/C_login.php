@@ -38,7 +38,7 @@ class C_login extends CI_Controller {
                 $v_data['id_username'] = $v_admin['admin_id'];
 
                 $this->session->set_userdata($v_data);
-                redirect('c_profile');
+                redirect('c_bulu_tangkis/beranda');
 
             }else {
                 $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">Username dan password salah!</div>');

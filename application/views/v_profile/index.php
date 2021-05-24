@@ -66,7 +66,7 @@
             </div>
 
        
-          <button class="row float-right mr-2 mt-2 mb-3 btn btn-primary" type="submit"><i class="fa fa-edit "></i> Ubah profile </button>
+          <button class="row float-right mr-2 mt-2 mb-3 btn btn-primary" onclick="return confirm('Yakin ingin diubah?');"><i class="fa fa-edit "></i> Ubah profile </button>
           <?= form_close(); ?>
               
               
