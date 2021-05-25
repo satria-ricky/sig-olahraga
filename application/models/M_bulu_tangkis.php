@@ -10,8 +10,6 @@ class M_bulu_tangkis extends CI_model {
         return $query=$this->db->query($sql)->result_array(); 
     }
 
-
-
     public function selectAllverifikasi(){
       $sql='SELECT * FROM tb_bt LEFT JOIN tb_status ON tb_bt.bt_status = tb_status.stts_id WHERE bt_status = 1';
       return $query=$this->db->query($sql)->result_array(); 
@@ -22,6 +20,12 @@ class M_bulu_tangkis extends CI_model {
       return $query=$this->db->query($sql,$status)->result_array(); 
     }
 
+  
+
+    public function select_by_id($id){
+      $sql='SELECT * FROM tb_bt LEFT JOIN tb_status ON tb_bt.bt_status = tb_status.stts_id WHERE bt_id =?';
+      return $query=$this->db->query($sql,$id)->row_array(); 
+    }
 
     
     public function total_bt(){
@@ -40,13 +44,23 @@ class M_bulu_tangkis extends CI_model {
     }
 
 
-
+    public function edit_bt($id, $data){     
+      $this->db->update('tb_bt', $data, array('bt_id' => $id));
+    }
 
     public function create_bt($v_data)
     {
         $this->db->insert('tb_bt', $v_data);
         return $this->db->affected_rows();
     }
+
+
+    public function hapus_bt($v_id) {
+      $this->db->where('bt_id', $v_id);
+      $this->db->delete('tb_bt');
+    }
+
+
 
 
 }
