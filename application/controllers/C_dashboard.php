@@ -30,6 +30,10 @@ class C_dashboard extends CI_Controller {
         $this->form_validation->set_rules('jam_buka','Jam_buka','required|trim', [
             'required' => 'Form tidak boleh kosong!',
         ]);
+
+        $this->form_validation->set_rules('jumlah_lapangan','Jam_buka','required|trim', [
+            'required' => 'Form tidak boleh kosong!',
+        ]);
         
         if($this->form_validation->run() == false){
             $this->load->view('v_dashboard/tambah');
@@ -40,6 +44,8 @@ class C_dashboard extends CI_Controller {
             $v_latitude = $this->input->post('latitude');
             $v_jam_buka = $this->input->post('jam_buka');
             $v_jam_tutup = $this->input->post('jam_tutup');
+            $v_jumlah_lapangan = $this->input->post('jumlah_lapangan');
+            $v_biaya_sewa = $this->input->post('biaya_sewa');
             $v_kontak = $this->input->post('kontak');
             $upload_foto = $_FILES['foto']['name'];
 
@@ -61,6 +67,8 @@ class C_dashboard extends CI_Controller {
                         'bt_jam_buka' => $v_jam_buka,
                         'bt_jam_tutup' => $v_jam_tutup,
                         'bt_status' => '2',
+                        'bt_jumlah' => $v_jumlah_lapangan,
+                        'bt_biaya' => $v_biaya_sewa,
                         'bt_kontak' => $v_kontak,
                         'bt_foto' => $v_nama_foto
                     ];
@@ -79,6 +87,8 @@ class C_dashboard extends CI_Controller {
                     'bt_jam_buka' => $v_jam_buka,
                     'bt_jam_tutup' => $v_jam_tutup,
                     'bt_status' => '2',
+                    'bt_jumlah' => $v_jumlah_lapangan,
+                    'bt_biaya' => $v_biaya_sewa,
                     'bt_kontak' => $v_kontak,
                     'bt_foto' => 'bt_default.jpg'
                 ];

@@ -238,7 +238,7 @@ class C_bulu_tangkis extends CI_Controller {
 
             $this->M_bulu_tangkis->edit_bt($v_id, $v_data);
             $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil diubah!</div>');
-            redirect('c_bulu_tangkis/edit');
+            redirect('c_bulu_tangkis/daftar');
         }
 
 

@@ -84,6 +84,14 @@
                                     <td>Jam tutup : <?= $bt['bt_jam_tutup']; ?> </td>
                                   </tr>
                                   <tr>
+                                  <td>Jumlah lapangan</td>
+                                    <td><?= $bt['bt_jumlah']; ?></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Biaya sewa/lapangan (Rp.)</td>
+                                    <td><?= $bt['bt_biaya']; ?></td>
+                                  </tr>
+                                  <tr>
                                     <td>Kontak</td>
                                     <td><?= $bt['bt_kontak']; ?></td>
                                   </tr>
@@ -96,8 +104,14 @@
                                     <td><?= $bt['latitude']; ?></td>
                                   </tr>
                                   <tr>
-                                    <td>Status</td>
-                                    <td><?= $bt['stts_nama']; ?></td>
+                                    <td> <b>Status</b></td>
+                                    <td>
+                                      <?php if ($bt['bt_status'] == '1') {?>
+                                        <h5 class="text-center"><span class="badge badge-success"><?= $bt['stts_nama']; ?></span></h5>
+                                      <?php } else {?>
+                                        <h5 class="text-center"><span class="badge badge-danger"><?= $bt['stts_nama']; ?></span></h5>
+                                      <?php }?>
+                                    </td>
                                   </tr>  
                                 </tbody>
                               </table>
@@ -152,7 +166,7 @@
                             "data": "bt_id",
                             "render": function(data, type, row, meta) {
                             return `
-                            <h6 class="text-center"><a href="${row.bt_id}" class="badge badge-primary" data-toggle="modal" data-target="#modal_detail${row.bt_id}" >Detail</a> <a href='<?= base_url('c_bulu_tangkis/edit/')?>${row.bt_id}' class="badge badge-success">Edit</a> <a href='<?= base_url('c_bulu_tangkis/hapus/')?>${row.bt_id}' class="badge badge-danger" onclick="return confirm('Yakin dihapus?');">Hapus</a></h6>
+                            <h6 class="text-center"><a href="${row.bt_id}" class="badge badge-primary" data-toggle="modal" data-target="#modal_detail${row.bt_id}" >Detail</a> <a href='<?= base_url('c_bulu_tangkis/edit/')?>${row.bt_id}' class="badge badge-success">Edit</a> <a href='<?= base_url('c_bulu_tangkis/hapus/')?>${row.bt_id}' class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data lapangan?');">Hapus</a></h6>
                             `;
                             }
                         }

@@ -271,7 +271,7 @@ mymap.addLayer (new L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}
       if (data[i].latitude != null || data[i].longitude != null) {
         
         var icon_map = L.icon({
-                iconUrl: '<?= base_url('assets/foto/bt/mapicon/bt.png')?>',
+                iconUrl: '<?= base_url('assets/foto/bt/mapicon/')?>'+data[i].stts_mapicon,
                 iconSize:     [40, 40], // size of the icon
             });
 

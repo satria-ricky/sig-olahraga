@@ -93,6 +93,17 @@
 <div class="card">
     <div class="card-body">
 
+
+                    <div class="form-group mr-1"> 
+                        <label for="basic-url">Jumlah lapangan</label>
+                        <input type="number" min="1" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="jumlah_lapangan" value="<?= $lapangan['bt_jumlah']; ?>">
+                        <?= form_error('jumlah_lapangan', '<small class="text-danger">', '</small>'); ?>
+                    </div>
+                    <div class="form-group ">
+                      <label for="basic-url">Biaya sewa/lapangan (Rp.)</label>
+                      <input type="number" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="biaya_sewa" value="<?= $lapangan['bt_biaya']; ?>">
+                    </div>
+
                 <label for="basic-url">Kontak</label>
                   <div class="form-group ">
                     <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="kontak" value="<?= $lapangan['bt_kontak']; ?>">
@@ -108,7 +119,7 @@
                     </div>
                   <hr>
                   <div class="row float-right mr-1"> 
-                      <button type="submit" class="btn btn-primary">Simpan</button>   
+                      <button type="submit" onclick="return confirm('Yakin ingin mengubah data lapangan?');" class="btn btn-primary">Simpan</button>   
                   </div>
             <?= form_close(); ?>
           </div>

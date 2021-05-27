@@ -116,7 +116,7 @@
                   </div>
                   <hr>
                   <div class="row float-right mr-1"> 
-                      <button type="submit" class="btn btn-primary">Simpan</button>   
+                      <button type="submit" onclick="return confirm('Yakin ingin menyimpan data lapangan?');" class="btn btn-primary">Simpan</button>   
                   </div>
                 <?= form_close(); ?>
               </div>
