@@ -26,6 +26,9 @@
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <link rel="stylesheet" href="<?= base_url() ?>leaflet-locatecontrol/dist/L.Control.Locate.min.css" />
 <script src="<?= base_url() ?>leaflet-locatecontrol/src/L.Control.Locate.js"></script>
+<link rel="stylesheet" href="<?= base_url() ?>leaflet-search/src/leaflet-search.css" />
+<script src="<?= base_url() ?>leaflet-search/src/leaflet-search.js"></script>
+
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Viga&display=swap" rel="stylesheet">
   

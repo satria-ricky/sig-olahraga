@@ -1,6 +1,7 @@
 
         <div class="container-fluid">
-          <a href="<?= base_url('c_bulu_tangkis/daftar'); ?>" class="btn btn-info mb-2"><i class="fa fa-arrow-left"></i> Kembali</a>            
+          <a href="<?= base_url('c_bulu_tangkis/daftar'); ?>" class="btn btn-info mb-2"><i class="fa fa-arrow-left"></i> Kembali</a>
+          <?= $this->session->flashdata('pesan'); ?>            
 <div class="row">
   <div class="col-sm-7">
     <div class="card">

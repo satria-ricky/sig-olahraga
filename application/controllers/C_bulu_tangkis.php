@@ -24,19 +24,19 @@ class C_bulu_tangkis extends CI_Controller {
     }
 
 //BERANDA
-    public function load_beranda(){
+    public function load_verif(){
     
             $output = '
             
             <div class="col-xl-3 col-md-6 mb-3 mt-2 ml-2" onclick="lapangan()" style="cursor: pointer;">
-              <div class="card border-left-primary shadow h-100 py-2">
+              <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-large font-weight-bold text-primary text-uppercase mb-1">Bulu tangkis</div>
+                      <div class="text-large font-weight-bold text-success text-uppercase mb-1">Diverifikasi</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"> 
 
-                        '.$this->M_bulu_tangkis->total_bt().'
+                        '.$this->M_bulu_tangkis->total_bt(1).'
 
                       </div>
                     </div>
@@ -46,7 +46,31 @@ class C_bulu_tangkis extends CI_Controller {
                   </div>
                 </div>
               </div> 
-            </div>';
+            </div>
+            
+
+            <div class="col-xl-3 col-md-6 mb-3 mt-2 ml-2" onclick="lapangan()" style="cursor: pointer;">
+              <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-large font-weight-bold text-danger text-uppercase mb-1">Tidak diverifikasi</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"> 
+
+                        '.$this->M_bulu_tangkis->total_bt(2).'
+
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-gear fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            </div>'
+            
+            
+            ;
 
             echo json_encode($output);
 
@@ -132,6 +156,11 @@ class C_bulu_tangkis extends CI_Controller {
         $this->form_validation->set_rules('jam_buka','Jam_buka','required|trim', [
             'required' => 'Form tidak boleh kosong!',
         ]);
+
+        $this->form_validation->set_rules('jumlah_lapangan','Jam_buka','required|trim', [
+            'required' => 'Form tidak boleh kosong!',
+        ]);
+
         $this->form_validation->set_rules('status_lapangan','Status_lapangan','required|callback_validasi_status_data');
 
         if($this->form_validation->run() == false){
@@ -152,6 +181,8 @@ class C_bulu_tangkis extends CI_Controller {
             $v_jam_tutup = $this->input->post('jam_tutup');
             $v_status = $this->input->post('status_lapangan');
             $v_kontak = $this->input->post('kontak');
+            $v_jumlah_lapangan = $this->input->post('jumlah_lapangan');
+            $v_biaya_sewa = $this->input->post('biaya_sewa');
             $upload_foto = $_FILES['foto']['name'];
 
             if($upload_foto){
@@ -180,6 +211,8 @@ class C_bulu_tangkis extends CI_Controller {
                         'bt_jam_tutup' => $v_jam_tutup,
                         'bt_status' => $v_status,
                         'bt_kontak' => $v_kontak,
+                        'bt_jumlah' => $v_jumlah_lapangan,
+                        'bt_biaya' => $v_biaya_sewa,
                         'bt_foto' => $v_nama_foto
                     ];
                 }
@@ -197,13 +230,15 @@ class C_bulu_tangkis extends CI_Controller {
                     'bt_jam_buka' => $v_jam_buka,
                     'bt_jam_tutup' => $v_jam_tutup,
                     'bt_status' => $v_status,
-                    'bt_kontak' => $v_kontak
+                    'bt_kontak' => $v_kontak,
+                    'bt_jumlah' => $v_jumlah_lapangan,
+                    'bt_biaya' => $v_biaya_sewa
                 ];
             }
 
             $this->M_bulu_tangkis->edit_bt($v_id, $v_data);
             $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil diubah!</div>');
-            redirect('c_bulu_tangkis/daftar');
+            redirect('c_bulu_tangkis/edit');
         }
 
 
@@ -226,12 +261,19 @@ class C_bulu_tangkis extends CI_Controller {
         $this->form_validation->set_rules('nama_lapangan', 'Nama_lapangan', 'required|trim', [
             'required' => 'Form tidak boleh kosong!',
         ]);
+
         $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim', [
             'required' => 'Form tidak boleh kosong!',
         ]);
+
         $this->form_validation->set_rules('jam_buka','Jam_buka','required|trim', [
             'required' => 'Form tidak boleh kosong!',
         ]);
+
+        $this->form_validation->set_rules('jumlah_lapangan','Jam_buka','required|trim', [
+            'required' => 'Form tidak boleh kosong!',
+        ]);
+
         $this->form_validation->set_rules('status_lapangan','Status_lapangan','required|callback_validasi_status_data');
 
 
@@ -251,6 +293,8 @@ class C_bulu_tangkis extends CI_Controller {
             $v_jam_buka = $this->input->post('jam_buka');
             $v_jam_tutup = $this->input->post('jam_tutup');
             $v_status = $this->input->post('status_lapangan');
+            $v_jumlah_lapangan = $this->input->post('jumlah_lapangan');
+            $v_biaya_sewa = $this->input->post('biaya_sewa');
             $v_kontak = $this->input->post('kontak');
             $upload_foto = $_FILES['foto']['name'];
 
@@ -273,6 +317,8 @@ class C_bulu_tangkis extends CI_Controller {
                         'bt_jam_tutup' => $v_jam_tutup,
                         'bt_status' => $v_status,
                         'bt_kontak' => $v_kontak,
+                        'bt_jumlah' => $v_jumlah_lapangan,
+                        'bt_biaya' => $v_biaya_sewa,
                         'bt_foto' => $v_nama_foto
                     ];
                 }
@@ -291,13 +337,15 @@ class C_bulu_tangkis extends CI_Controller {
                     'bt_jam_tutup' => $v_jam_tutup,
                     'bt_status' => $v_status,
                     'bt_kontak' => $v_kontak,
+                    'bt_jumlah' => $v_jumlah_lapangan,
+                    'bt_biaya' => $v_biaya_sewa,
                     'bt_foto' => 'bt_default.jpg'
                 ];
             }
 
             $this->M_bulu_tangkis->create_bt($v_data);
             $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil ditambah!</div>');
-            redirect('c_bulu_tangkis/daftar');
+            redirect('c_bulu_tangkis/tambah');
 
         }
     }

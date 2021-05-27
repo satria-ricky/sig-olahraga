@@ -1,6 +1,7 @@
 <div class="container-fluid">
 <a href="<?= base_url('c_bulu_tangkis/daftar'); ?>" class="btn btn-info mb-2"><i class="fa fa-arrow-left"></i> Lihat data lapangan</a>
 
+<?= $this->session->flashdata('pesan'); ?>
 <div class="row">
   <div class="col-sm-7">
     <div class="card">
@@ -89,8 +90,22 @@
 <div class="card">
     <div class="card-body">
 
-                <label for="basic-url">Kontak</label>
+                  
+
+
+                    <div class="form-group mr-1"> 
+                        <label for="basic-url">Jumlah lapangan</label>
+                        <input type="number" min="1" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="jumlah_lapangan" value="<?= set_value('jumlah_lapangan'); ?>">
+                        <?= form_error('jumlah_lapangan', '<small class="text-danger">', '</small>'); ?>
+                    </div>
+                    <div class="form-group ">
+                      <label for="basic-url">Biaya sewa/lapangan (Rp.)</label>
+                      <input type="number" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="biaya_sewa" value="<?= set_value('biaya_sewa'); ?>">
+                    </div>
+                  
+
                   <div class="form-group ">
+                  <label for="basic-url">Kontak</label>
                     <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="kontak" value="<?= set_value('kontak'); ?>">
                   </div>
 

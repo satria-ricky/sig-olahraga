@@ -23,10 +23,11 @@
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered " id="data_tabel" width="100%" cellspacing="0">
-                  <thead>
+                  <thead style="text-align:center">
                     <tr>
                       <th>Nama</th>
                       <th>Alamat</th>
+                      <th>Status</th>
                       <th>Aksi</th> 
                     </tr>
                   </thead>
@@ -38,6 +39,19 @@
         </div>
         <!-- /.container-fluid -->
 
+        <div  style="margin-top: 50px;"></div>
+
+<div class="container-fluid" id="peta_lapangan">
+  
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h4 class="font-weight-bold "> Peta Lokasi </h4>  
+      </div>
+        <div id="mapid" style="height: 450px;"></div>
+      </div>
+    </div>
+    
+  
 <!-- Modal -->
 
 <?php foreach($list as $bt ) : ?>
@@ -126,8 +140,19 @@
                         {
                             "data": "bt_id",
                             "render": function(data, type, row, meta) {
+                              if(row.bt_status == '1'){
+                                return `<h6 class="text-center"><span class="badge badge-success">${row.stts_nama}</span></h6>`;
+                                }
+                              else{
+                                return `<h6 class="text-center"><span class="badge badge-danger">${row.stts_nama}</span></h6>`;
+                              }
+                            }
+                        },
+                        {
+                            "data": "bt_id",
+                            "render": function(data, type, row, meta) {
                             return `
-                              <a href="${row.bt_id}" class="badge badge-primary" data-toggle="modal" data-target="#modal_detail${row.bt_id}" >Detail</a> <a href='<?= base_url('c_bulu_tangkis/edit/')?>${row.bt_id}' class="badge badge-success">Edit</a> <a href='<?= base_url('c_bulu_tangkis/hapus/')?>${row.bt_id}' class="badge badge-danger" onclick="return confirm('Yakin dihapus?');">Hapus</a>
+                            <h6 class="text-center"><a href="${row.bt_id}" class="badge badge-primary" data-toggle="modal" data-target="#modal_detail${row.bt_id}" >Detail</a> <a href='<?= base_url('c_bulu_tangkis/edit/')?>${row.bt_id}' class="badge badge-success">Edit</a> <a href='<?= base_url('c_bulu_tangkis/hapus/')?>${row.bt_id}' class="badge badge-danger" onclick="return confirm('Yakin dihapus?');">Hapus</a></h6>
                             `;
                             }
                         }
@@ -167,10 +192,12 @@
           // console.log("ini stts ="+id_status);
           $('#data_tabel').DataTable().destroy();
           getData(id_status);
+          getData_peta(id_status);
         }
         else{
           $('#data_tabel').DataTable().destroy();
           getData();
+          getData_peta();
           // console.log("gk ada = "+id_status);
         }
 
@@ -179,4 +206,94 @@
 
     });
 
+</script>
+
+<script> 
+getData_peta();
+
+function getData_peta(id){
+  $.ajax({
+        url: "<?php echo base_url(); ?>c_bulu_tangkis/load_data_to_tabel",
+        type: "post",
+        data: {
+            stts_id : id
+        },
+        dataType: "json",
+        success: function(data) {
+            // console.log(data);
+
+//load data
+
+      var datasearch = [];
+      for(var i =0;i < data.length; i++){
+        if (data[i].latitude != null || data[i].longitude != null) {
+          datasearch.push({"titik_koordinat":[data[i].latitude,data[i].longitude], "nama":data[i].bt_nama});
+        }
+      }
+
+// console.log(datasearch);
+
+	
+  navigator.geolocation.getCurrentPosition(function(location) {
+      var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
+
+    
+      console.log(location.coords.latitude, location.coords.longitude);
+
+      document.getElementById('mapid').innerHTML = "<div id='data_peta' style='height: 450px;'></div>";
+      
+
+      var mymap = new L.Map('data_peta', {zoom: 14, center: new L.latLng([-8.58280355011038, 116.13464826731037]) });
+
+mymap.addLayer (new L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+    maxZoom: 18,
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+      '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+      'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    id: 'mapbox/streets-v11',
+    }));
+
+
+  var markersLayer = new L.LayerGroup();	
+	mymap.addLayer(markersLayer);
+
+	mymap.addControl( new L.Control.Search({
+    position:'topleft',	
+		layer: markersLayer,
+		initial: false,
+    collapsed: true,
+    zoom: 17
+	}) );
+
+
+    var mylocation = L.marker(latlng).addTo(mymap).bindPopup('Youre location!');
+
+
+    for(var i =0;i < data.length; i++){
+      if (data[i].latitude != null || data[i].longitude != null) {
+        
+        var icon_map = L.icon({
+                iconUrl: '<?= base_url('assets/foto/bt/mapicon/')?>'+data[i].stts_mapicon,
+                iconSize:     [40, 40], // size of the icon
+            });
+
+            
+            var nama_bt = data[i].bt_nama;
+            var titik_koordinat = [data[i].latitude, data[i].longitude];
+            
+            marker = new L.Marker(new L.latLng(titik_koordinat), {title: nama_bt, icon:icon_map});
+
+            marker.bindPopup("<b>"+data[i].bt_nama+"</b><br>"+data[i].bt_alamat+"<br> <div class='row ml-1'><h6><a href='"+data[i].bt_id+"' class='btn btn-sm btn-outline-info' data-toggle='modal' data-target='#modal_detail"+data[i].bt_id+"'>Detail</a></h6><h6><a href='https://www.google.com/maps/dir/?api=1&origin="+location.coords.latitude+","+location.coords.longitude+"&destination="+data[i].latitude+","+data[i].longitude+"' class='btn btn-sm btn-outline-success' target='_blank'>Rute</a></h6></div>");
+            
+            markersLayer.addLayer(marker);
+
+      }
+    }
+
+  });
+        }
+
+    });
+
+}
 </script>

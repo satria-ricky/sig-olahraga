@@ -15,10 +15,6 @@
 
   <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
 
-  <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script> -->
-
-
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.0/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.3.0/dist/leaflet.js"></script>
@@ -150,14 +146,9 @@
           
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-  
               <h4 class="font-weight-bold "> Peta Lokasi </h4>  
             </div>
-
-
-                <div id="mapid" style="height: 450px;"></div>
-            
-
+              <div id="mapid" style="height: 450px;"></div>
             </div>
           </div>
           
@@ -337,6 +328,14 @@ mymap.addLayer (new L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}
                                   <tr>
                                     <td>Jam tutup </td>
                                     <td><?= $bt['bt_jam_tutup']; ?></td>
+                                  </tr>
+                                  <tr>
+                                  <td>Jumlah lapangan</td>
+                                    <td><?= $bt['bt_jumlah']; ?></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Biaya sewa/lapangan (Rp.)</td>
+                                    <td><?= $bt['bt_biaya']; ?></td>
                                   </tr>
                                   <tr>
                                     <td>Kontak</td>

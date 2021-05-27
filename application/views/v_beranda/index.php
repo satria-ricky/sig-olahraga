@@ -40,7 +40,7 @@ getData();
 function getData(){
   $.ajax({
       type: "POST",
-      url: "<?= base_url('c_bulu_tangkis/load_beranda'); ?>",
+      url: "<?= base_url('c_bulu_tangkis/load_verif'); ?>",
       dataType : "JSON",
       success: function(response){
         // console.log(response);
