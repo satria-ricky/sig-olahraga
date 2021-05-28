@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2021 at 05:31 AM
+-- Generation Time: May 27, 2021 at 02:54 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.3.27
 
@@ -64,17 +64,6 @@ CREATE TABLE `tb_bt` (
   `bt_status` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `tb_bt`
---
-
-INSERT INTO `tb_bt` (`bt_id`, `bt_nama`, `bt_alamat`, `bt_jam_buka`, `bt_jam_tutup`, `bt_kontak`, `bt_jumlah`, `bt_biaya`, `bt_foto`, `latitude`, `longitude`, `bt_status`) VALUES
-(1, 'lapangan bulu tangkis 1', 'alamat 1', '08:56', '10:56', 'kontak 1', NULL, NULL, 'bt_default.jpg', '-8.580181', '116.100741', 1),
-(7, 'nama baru', 'alamat baru', '08:03', '07:58', '0987654', NULL, NULL, 'gigit.jpg', '-8.578135628497737', '116.10660116437805', 1),
-(8, 'as baru', 'bn baru', '01:55', '20:00', 'kontak baru', NULL, NULL, '10155177_540626589389254_4387240563293915915_n1.jpg', '-8.601049980458777', '116.13956703163419', 1),
-(9, 'nama baru 1', 'alamat baru 1', '06:05', '00:05', '987654', NULL, NULL, 'EVOS-ESPORTS-New-Logo-2018-300x290.png', '-8.4095178', '115.18891599999999', 2),
-(10, 'lap baru', 'al baru', '03:37', '23:37', 'kon baru', NULL, NULL, 'image_2021-05-25_233735.png', '-8.5542059', '116.1233981', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -83,16 +72,17 @@ INSERT INTO `tb_bt` (`bt_id`, `bt_nama`, `bt_alamat`, `bt_jam_buka`, `bt_jam_tut
 
 CREATE TABLE `tb_status` (
   `stts_id` int(11) NOT NULL,
-  `stts_nama` varchar(255) DEFAULT NULL
+  `stts_nama` varchar(255) DEFAULT NULL,
+  `stts_mapicon` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_status`
 --
 
-INSERT INTO `tb_status` (`stts_id`, `stts_nama`) VALUES
-(1, 'Diverifikasi'),
-(2, 'Tidak diverifikasi');
+INSERT INTO `tb_status` (`stts_id`, `stts_nama`, `stts_mapicon`) VALUES
+(1, 'Diverifikasi', 'verifikasi.png'),
+(2, 'Tidak diverifikasi', 'unverif.png');
 
 --
 -- Indexes for dumped tables
@@ -130,7 +120,7 @@ ALTER TABLE `tb_admin`
 -- AUTO_INCREMENT for table `tb_bt`
 --
 ALTER TABLE `tb_bt`
-  MODIFY `bt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `bt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tb_status`
