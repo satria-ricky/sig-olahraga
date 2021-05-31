@@ -270,6 +270,13 @@ class C_bulu_tangkis extends CI_Controller {
             'required' => 'Form tidak boleh kosong!',
         ]);
 
+
+        $this->form_validation->set_rules('latitude', 'Latitude', 'required|trim', [
+            'required' => 'Silahkan set titik koordinat!',
+        ]);
+
+
+
         $this->form_validation->set_rules('jumlah_lapangan','Jam_buka','required|trim', [
             'required' => 'Form tidak boleh kosong!',
         ]);

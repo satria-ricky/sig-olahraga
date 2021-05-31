@@ -30,6 +30,9 @@ class C_dashboard extends CI_Controller {
         $this->form_validation->set_rules('jam_buka','Jam_buka','required|trim', [
             'required' => 'Form tidak boleh kosong!',
         ]);
+        $this->form_validation->set_rules('latitude', 'Latitude', 'required|trim', [
+            'required' => 'Silahkan set titik koordinat!',
+        ]);
 
         $this->form_validation->set_rules('jumlah_lapangan','Jam_buka','required|trim', [
             'required' => 'Form tidak boleh kosong!',

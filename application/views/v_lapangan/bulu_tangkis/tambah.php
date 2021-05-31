@@ -44,11 +44,14 @@
                   <div class="btn-group">
                     <div class="form-group mr-1"> 
                         <label for="basic-url">Latitude</label>
-                        <input type="text" class="form-control" id="Latitude" aria-describedby="basic-addon3" name="latitude" readonly="">
+                        <input type="text" class="form-control" id="Latitude" aria-describedby="basic-addon3" name="latitude" readonly="" required>
+                        <?= form_error('latitude', '<small class="text-danger">', '</small>'); ?>
+
                     </div>
+                    
                     <div class="form-group ">
                        <label for="basic-url">Longitude</label>
-                       <input type="text" class="form-control" id="Longitude" aria-describedby="basic-addon3" name="longitude" readonly="">
+                       <input type="text" class="form-control" id="Longitude" aria-describedby="basic-addon3" name="longitude" readonly="" required>
                     </div>
                   </div>
 
