@@ -17,8 +17,7 @@ class C_dashboard extends CI_Controller {
 		echo json_encode($data);	
 	}
 
-
-
+//dashboard
 	public function tambah(){
                
         $this->form_validation->set_rules('nama_lapangan', 'Nama_lapangan', 'required|trim', [
