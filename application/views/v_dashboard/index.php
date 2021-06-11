@@ -176,13 +176,27 @@
   
   
 <script> 
+
   getData();
     function getData(){
+
+      navigator.geolocation.getCurrentPosition(function(location) { 
+        console.log("ini titik : "+location.coords.latitude, location.coords.longitude);
+
+      
+      
+      
+
+      
+    
+      
+      
       $.ajax({
             url: "<?php echo base_url(); ?>c_dashboard/load_data_to_tabel",
             dataType: "json",
             success: function(data) {
                 // console.log(data);
+                
                 var i = 1;
                  $('#data_tabel').DataTable( {
                   "data": data,
@@ -196,14 +210,24 @@
                         {
                             "data": "bt_id",
                             "render": function(data, type, row, meta) {
-                            return `<a href="${row.bt_id}" class="badge badge-primary" data-toggle="modal" data-target="#modal_detail${row.bt_id}" >Detail</a>`;
+                            return `
+                              <a href="${row.bt_id}" class="badge badge-primary" data-toggle="modal" data-target="#modal_detail${row.bt_id}" >Detail</a>
+                              
+                              <a href='https://www.google.com/maps/dir/?api=1&origin=${location.coords.latitude},${location.coords.longitude}&destination=${row.latitude},${row.longitude}' class="badge badge-success" target="_blank">Rute</a>
+                            `;
                             }
                         }
               ]
           } );
             }
         });
+      
+      });
+
+
     } 
+
+
 </script>
 
 
