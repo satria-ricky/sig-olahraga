@@ -133,6 +133,11 @@
 
     function getData(id){
       // console.log(id);
+
+      navigator.geolocation.getCurrentPosition(function(location) { 
+        console.log("ini titik : "+location.coords.latitude, location.coords.longitude);
+
+
       $.ajax({
             url: "<?php echo base_url(); ?>c_bulu_tangkis/load_data_to_tabel",
             type: "post",
@@ -166,7 +171,8 @@
                             "data": "bt_id",
                             "render": function(data, type, row, meta) {
                             return `
-                            <h6 class="text-center"><a href="${row.bt_id}" class="badge badge-primary" data-toggle="modal" data-target="#modal_detail${row.bt_id}" >Detail</a> <a href='<?= base_url('c_bulu_tangkis/edit/')?>${row.bt_id}' class="badge badge-success">Edit</a> <a href='<?= base_url('c_bulu_tangkis/hapus/')?>${row.bt_id}' class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data lapangan?');">Hapus</a></h6>
+                            <h6 class="text-center"><a href="${row.bt_id}" class="badge badge-primary" data-toggle="modal" data-target="#modal_detail${row.bt_id}" >Detail</a> <a href='<?= base_url('c_bulu_tangkis/edit/')?>${row.bt_id}' class="badge badge-success">Edit</a> <a href='<?= base_url('c_bulu_tangkis/hapus/')?>${row.bt_id}' class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data lapangan?');">Hapus</a>
+                            <a href='https://www.google.com/maps/dir/?api=1&origin=${location.coords.latitude},${location.coords.longitude}&destination=${row.latitude},${row.longitude}' class="badge badge-success" target="_blank">Rute</a></h6>
                             `;
                             }
                         }
@@ -174,6 +180,7 @@
           } );
             }
         });
+      });
     } 
     getData();
 

@@ -183,13 +183,7 @@
       navigator.geolocation.getCurrentPosition(function(location) { 
         console.log("ini titik : "+location.coords.latitude, location.coords.longitude);
 
-      
-      
-      
-
-      
     
-      
       
       $.ajax({
             url: "<?php echo base_url(); ?>c_dashboard/load_data_to_tabel",
